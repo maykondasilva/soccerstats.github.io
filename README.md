@@ -1,7 +1,9 @@
 # soccerstats.github.io
 
 PUBH 7462 - Advanced Programming and Data Analysis in R
+
 Final Project Proposal 
+
 Felipe Pena Mosca and Maykon da Silva
  
  
