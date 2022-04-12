@@ -46,7 +46,3 @@ Link for the data set:
 
 https://www.kaggle.com/datasets/kriegsmaschine/soccer-players-values-and-their-statistics?select=transfermarkt_fbref_201819.csv
 
-Link for the data set:
-
-https://www.kaggle.com/datasets/kriegsmaschine/soccer-players-values-and-their-statistics?select=transfermarkt_fbref_201819.csv
-
