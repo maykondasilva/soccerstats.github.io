@@ -5,7 +5,7 @@ library(DataExplorer)
 
 # Load data
 
-df <- read.csv(file = './data/transfermarkt_fbref_201819.csv', header = TRUE)
+df <- read_csv(file = './data/soccer.csv')
 
 # Exploratory data analysis
 
@@ -26,20 +26,29 @@ plot_missing(df,
 
 # Data includes 2232 observations and 400 variables
 
-# 1 Who are the top 5 most valuable soccer players, what is their nationality, position, team (squad), and how many goals did they score in the 2018/2019 season?
+# Q1 Who are the top 5 most valuable soccer players, what is their nationality, position, team (squad), and how many goals did they score in the 2018/2019 season?
 
 df %>%
 summarise(average_value_millions = round((mean(value,na.rm=TRUE)/1000000),2) ,average_goals= round(mean(goals,na.rm=TRUE),2))
 
+# do this with tidyverse
 
-df.2 <-df %>%
-filter(!is.na(value),!is.na(goals)) %>%
+df$value_millions <- (df$value)/1000000
+
+# Visualizations with ggplot
+
+hist(df$value_millions)
+
+df <-df %>%
 arrange(desc(value)) %>%
 mutate(ranking_player_value = 1:length(player)) %>%
-arrange(goals) %>%
+arrange(desc(goals)) %>%
 mutate(ranking_goals = 1:length(player))
 
+# Density plot of number of goals by player -- divide by nationality
 
-# 3.2 What are the soccer teams (squad) and leagues for which the top scorers played?
 
-# 3.3 What are the top 10 nationalities with the highest number of goals scored by their top 5 scorers?
+
+# Q2 What are the soccer teams (squad) and leagues for which the top scorers played?
+
+# Q3 What are the top 10 nationalities with the highest number of goals scored by their top 5 scorers?
