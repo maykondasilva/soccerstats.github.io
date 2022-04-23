@@ -28,26 +28,105 @@ plot_missing(df,
 
 # Q1 Who are the top 5 most valuable soccer players, what is their nationality, position, team (squad), and how many goals did they score in the 2018/2019 season?
 
-df %>%
-summarise(average_value_millions = round((mean(value,na.rm=TRUE)/1000000),2) ,average_goals= round(mean(goals,na.rm=TRUE),2))
+# Check that variables are the correct type 
+
+str(df$value)
+str(df$squad)
+str(df$nationality)
+str(df$position)
+
+# Modify variables that were wrong variable type
+
+
+df$squad <- as.factor(df$squad)
+df$nationality <- as.factor(df$nationality)
+df$position <- as.factor(df$position)
 
 # do this with tidyverse
 
-df$value_millions <- (df$value)/1000000
+df <- df %>% mutate(value_millions = (value/1000000))
 
-# Visualizations with ggplot
-
-hist(df$value_millions)
+# Ranking of players by value and number of goal
 
 df <-df %>%
 arrange(desc(value)) %>%
 mutate(ranking_player_value = 1:length(player)) %>%
 arrange(desc(goals)) %>%
-mutate(ranking_goals = 1:length(player))
+mutate(ranking_player_goals = 1:length(player))
+
+# ----  Player's value ----
+
+# Average value of players in all dataset 
+
+df %>%
+summarise(average_value_millions = round((mean(value_millions,na.rm=TRUE)),2)) %>%
+arrange(desc(average_value_millions))
+
+# Average value of players by position
+
+df %>%
+group_by(position) %>%
+summarise(average_value_millions = round((mean(value_millions,na.rm=TRUE)),2)) %>%
+arrange(desc(average_value_millions))
+
+# Average value of players by nationality
+
+df %>%
+  group_by(nationality) %>%
+  summarise(average_value_millions = round((mean(value_millions,na.rm=TRUE)),2)) %>%
+  arrange(desc(average_value_millions))
+
+# Average value of players by team
+
+ df %>%
+  group_by(squad) %>%
+  summarise(average_value_millions = round((mean(value_millions,na.rm=TRUE)),2)) %>%
+  arrange(desc(average_value_millions))
+ 
+ # Top 5 more valuable players
+
+df %>%
+arrange(ranking_player_value) %>%
+filter(row_number() %in% 1:5) %>%
+select(c(player,squad,nationality,position,goals,value_millions,ranking_player_value))
+
+# ----  Player's goals ----
+
+# Average goals of players in all dataset 
+
+df %>%
+  summarise(goals = round((mean(goals,na.rm=TRUE)),2)) %>%
+  arrange(desc(goals))
+
+# Average goals of players by position
+
+df %>%
+  group_by(position) %>%
+  summarise(goals = round((mean(goals,na.rm=TRUE)),2)) %>%
+  arrange(desc(goals))
+
+# Average goals of players by nationality
+
+df %>%
+  group_by(nationality) %>%
+  summarise(goals = round((mean(goals,na.rm=TRUE)),2)) %>%
+  arrange(desc(goals))
+
+# Average goals of players by team
+
+df %>%
+  group_by(squad) %>%
+  summarise(goals = round((mean(goals,na.rm=TRUE)),2)) %>%
+  arrange(desc(goals))
+
+# Where top 5 players with major goals are
+
+df %>%
+  arrange(ranking_player_goals) %>%
+  filter(row_number() %in% 1:5) %>%
+  select(c(player,squad,nationality,position,goals,value_millions,ranking_player_goals))
 
 # Density plot of number of goals by player -- divide by nationality
-
-
 
 # Q2 What are the soccer teams (squad) and leagues for which the top scorers played?
 
