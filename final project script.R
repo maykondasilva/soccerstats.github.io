@@ -5,7 +5,9 @@ library(DataExplorer)
 
 # Load data
 
-df <- read_csv(file = './data/soccer.csv')
+df <- read_csv(file = './data/soccer.csv') %>%
+filter(!is.na(player))
+
 
 # Exploratory data analysis
 
@@ -62,34 +64,71 @@ df %>%
 summarise(average_value_millions = round((mean(value_millions,na.rm=TRUE)),2)) %>%
 arrange(desc(average_value_millions))
 
-# Average value of players by position
+# Value top 5 by position
 
 df %>%
 group_by(position) %>%
-summarise(average_value_millions = round((mean(value_millions,na.rm=TRUE)),2)) %>%
-arrange(desc(average_value_millions))
+arrange(ranking_player_value) %>%
+slice(1:5) %>%
+mutate(average_value_top_5 = round((mean(value,na.rm=TRUE)),2)) %>%
+arrange(desc(average_value_top_5)) %>%
+select(c(player,squad,nationality,position,goals,assists,value,ranking_player_value)) %>%
+rename("Player"=player,"Team"=squad,"Nationality"=nationality,"Goals"=goals,"Assists"=assists,"Value"=value,"Overall ranking value"=ranking_player_value) %>%
+gt() %>%
+fmt_number(
+columns = where(is.numeric), 
+decimals = 0 ,
+suffixing = TRUE) %>%
+cols_align(
+align = "center",
+columns = everything()) %>%
+tab_header(title = md("**Top 5 most valuable players by position**")) %>%
+tab_source_note("Data from season 18/19 extracted from Kaggle")
 
-# Average value of players by nationality
+
+# Value top 5 by nationality
 
 df %>%
   group_by(nationality) %>%
-  summarise(average_value_millions = round((mean(value_millions,na.rm=TRUE)),2)) %>%
-  arrange(desc(average_value_millions))
+  arrange(ranking_player_value) %>%
+  slice(1:5) %>%
+  mutate(average_value_top_5 = round((mean(value,na.rm=TRUE)),2)) %>%
+  arrange(desc(average_value_top_5)) %>%
+  select(c(player,squad,nationality,position,goals,assists,value,ranking_player_value)) %>%
+  rename("Player"=player,"Team"=squad,"Nationality"=nationality,"Goals"=goals,"Assists"=assists,"Value"=value,"Overall ranking value"=ranking_player_value) %>%
+  gt() %>%
+  fmt_number(
+    columns = where(is.numeric), 
+    decimals = 0 ,
+    suffixing = TRUE) %>%
+  cols_align(
+    align = "center",
+    columns = everything()) %>%
+  tab_header(title = md("**Top 5 most valuable players by nationality**")) %>%
+  tab_source_note("Data from season 18/19 extracted from Kaggle")
 
-# Average value of players by team
 
- df %>%
-  group_by(squad) %>%
-  summarise(average_value_millions = round((mean(value_millions,na.rm=TRUE)),2)) %>%
-  arrange(desc(average_value_millions))
- 
- # Top 5 more valuable players
+# Value top 5 by team
 
 df %>%
-arrange(ranking_player_value) %>%
-filter(row_number() %in% 1:5) %>%
-select(c(player,squad,nationality,position,goals,value_millions,ranking_player_value))
-
+  group_by(squad) %>%
+  arrange(ranking_player_value) %>%
+  slice(1:5) %>%
+  mutate(average_value_top_5 = round((mean(value,na.rm=TRUE)),2)) %>%
+  arrange(desc(average_value_top_5)) %>%
+  select(c(player,squad,nationality,position,goals,assists,value,ranking_player_value)) %>%
+  rename("Player"=player,"Team"=squad,"Nationality"=nationality,"Goals"=goals,"Assists"=assists,"Value"=value,"Overall ranking value"=ranking_player_value) %>%
+  gt() %>%
+  fmt_number(
+    columns = where(is.numeric), 
+    decimals = 0 ,
+    suffixing = TRUE) %>%
+  cols_align(
+    align = "center",
+    columns = everything()) %>%
+  tab_header(title = md("**Top 5 most valuable players by team**")) %>%
+  tab_source_note("Data from season 18/19 extracted from Kaggle")
+ 
 # ----  Player's goals ----
 
 # Average goals of players in all dataset 
@@ -102,31 +141,68 @@ df %>%
 
 df %>%
   group_by(position) %>%
-  summarise(goals = round((mean(goals,na.rm=TRUE)),2)) %>%
-  arrange(desc(goals))
+  arrange(ranking_player_goals) %>%
+  slice(1:5) %>%
+  mutate(average_goals_top_5 = round((mean(goals,na.rm=TRUE)),2)) %>%
+  arrange(desc(average_goals_top_5)) %>%
+  select(c(player,squad,nationality,position,goals,assists,value,ranking_player_goals)) %>%
+  rename("Player"=player,"Team"=squad,"Nationality"=nationality,"Goals"=goals,"Assists"=assists,"Value"=value,"Overall ranking goals"=ranking_player_goals) %>%
+  gt() %>%
+  fmt_number(
+    columns = where(is.numeric), 
+    decimals = 0 ,
+    suffixing = TRUE) %>%
+  cols_align(
+    align = "center",
+    columns = everything()) %>%
+  tab_header(title = md("**Top 5 highest goal scorers by position**")) %>%
+  tab_source_note("Data from season 18/19 extracted from Kaggle")
+
+
 
 # Average goals of players by nationality
 
 df %>%
   group_by(nationality) %>%
-  summarise(goals = round((mean(goals,na.rm=TRUE)),2)) %>%
-  arrange(desc(goals))
+  arrange(ranking_player_goals) %>%
+  slice(1:5) %>%
+  mutate(average_goals_top_5 = round((mean(goals,na.rm=TRUE)),2)) %>%
+  arrange(desc(average_goals_top_5)) %>%
+  select(c(player,squad,nationality,position,goals,assists,value,ranking_player_goals)) %>%
+  rename("Player"=player,"Team"=squad,"Nationality"=nationality,"Goals"=goals,"Assists"=assists,"Value"=value,"Overall ranking goals"=ranking_player_goals) %>%
+  gt() %>%
+  fmt_number(
+    columns = where(is.numeric), 
+    decimals = 0 ,
+    suffixing = TRUE) %>%
+  cols_align(
+    align = "center",
+    columns = everything()) %>%
+  tab_header(title = md("**Top 5 highest goal scorers by nationality**")) %>%
+  tab_source_note("Data from season 18/19 extracted from Kaggle")
+
 
 # Average goals of players by team
 
 df %>%
   group_by(squad) %>%
-  summarise(goals = round((mean(goals,na.rm=TRUE)),2)) %>%
-  arrange(desc(goals))
-
-# Where top 5 players with major goals are
-
-df %>%
   arrange(ranking_player_goals) %>%
-  filter(row_number() %in% 1:5) %>%
-  select(c(player,squad,nationality,position,goals,value_millions,ranking_player_goals))
+  slice(1:5) %>%
+  mutate(average_goals_top_5 = round((mean(goals,na.rm=TRUE)),2)) %>%
+  arrange(desc(average_goals_top_5)) %>%
+  select(c(player,squad,nationality,position,goals,assists,value,ranking_player_goals)) %>%
+  rename("Player"=player,"Team"=squad,"Nationality"=nationality,"Goals"=goals,"Assists"=assists,"Value"=value,"Overall ranking goals"=ranking_player_goals) %>%
+  gt() %>%
+  fmt_number(
+    columns = where(is.numeric), 
+    decimals = 0 ,
+    suffixing = TRUE) %>%
+  cols_align(
+    align = "center",
+    columns = everything()) %>%
+  tab_header(title = md("**Top 5 highest goal scorers by team**")) %>%
+  tab_source_note("Data from season 18/19 extracted from Kaggle")
 
-# Density plot of number of goals by player -- divide by nationality
 
 # Q2 What are the soccer teams (squad) and leagues for which the top scorers played?
 
