@@ -1,0 +1,27 @@
+name: "Yay internet!"
+header-includes: 
+  \usepackage{graphicx}
+  \usepackage{float}
+output_dir: "."
+navbar:
+  title: "Home"
+  right:
+    - text: "Professional Documents"
+      menu:
+          - text: "Resume"
+            href: resume.html
+    - text: "Recent Work"
+      menu:
+          - text: "Flexdashboard"
+            href: flexdashboard_template_2.html
+          - text: "Spatial Dashboard"
+            href: spatial_dashboard.html
+    - icon: fa-envelope fa-lg
+      href: mailto:<mjdasilv@umn.edu>
+    - icon: fa-github fa-lg
+      href: http://github.com/maykondasilva/
+    - icon: fa-linkedin fa-lg
+      href: https://www.linkedin.com/in/maykon-junior-da-silva-424742140/
+output:  
+   html_document:
+    theme: flatly

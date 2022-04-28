@@ -1,0 +1,317 @@
+---
+title: "Homework 5 - Problem 3"
+author: "Maykon da Silva"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include = FALSE, echo = FALSE}
+library(tidyverse)
+library(lubridate)
+library(gt)
+library(paletteer)
+library(plotly)
+library(flexdashboard)
+library(janitor)
+library(forcats)
+library(purrr)
+library(webshot)
+library(graphics)
+library(RColorBrewer)
+
+#Working directory for .RMD
+knitr::opts_knit$set(echo = TRUE,
+                     root.dir = rprojroot::find_rstudio_root_file())
+
+#Controlling figure output in markdown
+knitr::opts_chunk$set(
+  fig.height = 8, 
+  fig.width = 6,
+#  fig.asp = .5,
+  out.width = "90%",
+#  out.height = 
+ fig.align  = "center",
+  cache = FALSE,
+  eval  = TRUE,
+  echo  = TRUE,
+  warning = FALSE
+)
+
+#My Colours (from viridis)
+my_purple <- "#440154FF"
+my_yellow <- "#FDE725FF"
+
+#Set Theme for ggplot2
+theme_set(theme_bw() + theme(plot.title = element_text(hjust = 0.5), legend.position = "bottom"))
+
+#Set Scientific notation output and decimal places for knitr
+options(scipen = 999)
+options(digits = 4)
+options(dplyr.summarise.inform = FALSE)
+```
+
+
+```{r data_read, include = FALSE, echo = FALSE}
+#Read in the instacart data set
+
+instacart.df <- read.csv("./data/instacart.csv")
+```
+
+```{r, echo = FALSE, include = FALSE}
+# Creating 6 variables and running the summary statistics for each of them
+instacart.summary <- instacart.df %>%
+  group_by(order_id, user_id) %>%
+  summarise(n.items         = max(add_to_cart_order),
+            pct.reordered   = mean(reordered) * 100,
+            days.last.order = unique(days_since_prior_order),
+            n.depart        = length(unique(department)),
+            n.aisle         = length(unique(aisle)),
+            order.number    = unique(order_number)) %>%
+  ungroup() %>%
+  summarise(
+    across(
+      contains(c("pct.reo", "n.", "order.", "days.")),
+               list(mean = mean, median = median, sd = sd),
+               .names = "{.col}_{.fn}")) %>%
+  ungroup()
+```
+
+```{r, echo = FALSE, include = FALSE}
+# Reading in the brfss data set with relative path
+brfss.df <- read_csv("./data/brfss_smart_2010.csv")
+```
+
+```{r, echo = FALSE, include = FALSE}
+
+# Tidying up the data (Cleaning)
+brfss.tidy <- brfss.df %>%
+  clean_names() %>%
+  filter(topic %in% "Overall Health") %>%
+  rename(state = locationabbr, locations = locationdesc, prop_responses = data_value) %>%
+  separate(locations, c("state_abb", "county"), sep = " - ") %>%
+  select(year, state, county, response, sample_size, prop_responses) %>%
+  mutate(year = as.factor(year))
+```
+
+```{r, echo = FALSE, warning = FALSE, error = FALSE, message = FALSE}
+
+#Creating file_dir
+file_dir <- "./data/"
+
+# Task 1 file list
+covid_file_list <- list.files(file_dir, pattern = c("csv"))
+
+# Remove aggregate file
+covid_file_list <- covid_file_list[!str_detect(covid_file_list, c("aggregate"))]
+
+# Displaying the list of files in a tibble
+tibble_list <- tibble(
+  file_list = covid_file_list) %>% 
+  rename("File List" = file_list) %>%
+  gt() %>%
+  cols_align(align = c("center"), columns = everything())
+
+```
+
+```{r, echo = FALSE, warning = FALSE, error = FALSE, message = FALSE}
+
+# Extracting the meta data with stringr (creating a tibble to read)
+covid.df <- tibble(
+  file_dir  = "./data/",
+  file_list = covid_file_list,
+  data_name = str_split(file_list, "_", 1) %>%
+    map_chr(1) %>%
+    str_remove(".csv"),
+  continent = data_name %>%
+    str_remove("covid19_"),
+  file_paths = str_c(file_dir, file_list))
+```
+
+```{r, echo = FALSE, warning = FALSE, error = FALSE, message = FALSE}
+
+# Nested/grouped structure
+covid_nest.df <- covid.df %>%
+  mutate(
+    data = map(.x = file_paths, ~read_csv(.x, show_col_types = FALSE))) %>%
+  dplyr::select(!contains(c("file", "name")))
+```
+
+```{r, , echo = FALSE, warning = FALSE, error = FALSE, message = FALSE}
+
+#display the whole combined data set unnested (Only if needed, but do not need to display now)
+covid_unnested.df <- covid_nest.df %>%
+  unnest(data)
+```
+
+```{r, , echo = FALSE, warning = FALSE, error = FALSE, message = FALSE}
+
+# Utilizing lubridate to transform temporal variables and extract month and day of the week
+covid.df <- covid_unnested.df %>%
+  mutate(
+    date  = ymd(date),
+    month = month(date, 
+                  label = TRUE, 
+                  abbr  = FALSE),
+    dow   = wday(date, 
+                 label = TRUE, 
+                 abbr  = FALSE, 
+                 week_start = getOption("lubridate.week.start", 1)))
+```
+
+```{r, echo = FALSE, warning = FALSE, error = FALSE, message = FALSE}
+
+# Renaming/naming variables appropriately (Other variables will be renamed later on)
+covid.df <- covid.df %>%
+  mutate(continent = str_to_title(continent)) %>%
+  rename("Continent"   = continent,
+         "Country"     = location,
+         "Date_obs"    = date,
+         "Population"  = population)
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r, echo = FALSE}
+plot_2 <- brfss.tidy %>%
+  filter(year     %in% c("2002", "2006", "2010"),
+         state    %in% "MN",
+         response %in% c("Excellent", "Good", "Poor")) %>%
+  group_by(year, response) %>%
+  summarise(
+    across(
+      contains(c("sample", "prop")),
+        list(mean = mean, sd = sd), na.rm = TRUE,
+        .names = "{.col}_{.fn}"
+  )
+) %>%
+  pivot_longer(cols      = 3:6, 
+               names_to  = "variable_mean.sd", 
+               values_to = "value") %>%
+  mutate(fct_relevel(response, c("Excellent", "Good", "Poor")),
+         year = year %>%
+           as.character() %>%
+           as.numeric()) %>%
+  mutate(variable_mean.sd = recode(variable_mean.sd, 
+                                   sample_size_mean    = "Sample Size Mean", 
+                                   sample_size_sd      = "Sample Size S.D.",
+                                   prop_responses_mean = "Prop. Responses Mean",
+                                   prop_responses_sd   = "Prop. Responses S.D.")) %>%
+    mutate(
+    text_label = str_c(response,
+                       "\nVariable: ", variable_mean.sd,
+                       "\nValue = ", round(value, digits = 2))
+  ) %>%
+  ggplot(aes(x = year, y = value, colour = response)) +
+  geom_point(aes(text = text_label), alpha = 0.6, shape = 16, size = 4) +
+  stat_smooth(alpha = 0.4, size = 1.2, method = "loess", span = 2, se = FALSE) +
+  labs(x        = "Year", 
+       y        = "Values of Summary Statistics (Average)", 
+       title    = "Mean and Std. Deviation by Response for MN in 2002, 2006 and 2010") +
+  facet_wrap(~variable_mean.sd, scales = "free", ncol = 2) +
+  scale_colour_viridis_d("Overall Health Response", option = "turbo") +
+  scale_x_continuous(breaks = seq(from = 2002, to = 2010, by = 4)) +
+  theme_bw()
+
+ggplotly(plot_2, tooltip = "text") %>% layout(legend = list(orientation = "h", x = 0, y = -0.1))
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r, echo = FALSE}
+
+# Summarizing the global rolling values for cases and deaths
+global_summaries_rolling <- covid.df %>%
+  unnest() %>%
+  mutate(new_deaths = replace_na(new_deaths, 0),
+         new_cases  = replace_na(new_cases, 0),
+         new_cases_smoothed  = replace_na(new_cases_smoothed, 0),
+         new_deaths_smoothed = replace_na(new_deaths_smoothed, 0)) %>%
+  group_by(Date_obs) %>%
+  summarise(global_rolling_cases  = sum(new_cases),
+            global_rolling_deaths = sum(new_deaths),
+            seven_day_cases  = sum(new_cases_smoothed),
+            seven_day_deaths = sum(new_deaths_smoothed)) 
+
+# GGPLOT FOR CASES
+cases_rolling <- global_summaries_rolling %>%
+  ungroup() %>%
+  mutate(
+    text_label = str_c("New Cases & 7-Day Av.",
+                       "\nDate: ", Date_obs,
+                       "\nNew Cases = ", global_rolling_cases,
+                       "\n7-Day Avg.  = ", round(seven_day_cases, digits = 2),
+                       "\nDay of Week - ", wday(Date_obs, label = TRUE, abbr = FALSE))
+  ) %>%
+  ggplot(aes(Date_obs)) +
+  geom_bar(aes(y = global_rolling_cases, fill = "New Cases", text = text_label), stat = "identity") +
+  geom_line(aes(y = seven_day_cases, color = "7-Day Average")) +
+  scale_color_manual("", values = c("7-Day Average" = "black")) +
+  scale_fill_manual("", values = "blue") +
+  labs(
+      x     = "Date",
+      y     = "No. of Cases",
+      title = "New and 7-Day Avg. Cases of COVID-19 Worldwide"
+    ) +
+  scale_x_date(
+    date_breaks       = "3 month",
+    date_minor_breaks = "1 day",
+    date_labels       = "%b %y") +
+  scale_y_continuous(labels = scales::label_number_si(), expand = c(0, 0)) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle   = 45,
+                                     vjust = 1.24,
+                                     hjust = 1.2,
+                                     size  = 10),
+          axis.text.y = element_text(size  = 10)) +
+  theme(legend.key      = element_blank(),
+        legend.title    = element_blank(),
+        legend.position = "bottom",
+        axis.title  = element_text(size = 8),
+        axis.text.x = element_text(size = 6),
+        plot.title  = element_text(size = 9))
+
+ggplotly(cases_rolling, tooltip = "text")
+```
+
+### Chart C
+
+```{r, echo = FALSE, include = TRUE, message = FALSE, warning = FALSE}
+# First plot using plotly
+
+plot1_new <- instacart.df %>%
+  group_by(aisle) %>%
+  summarise(n_orders = length(product_name)) %>%
+  ungroup() %>%
+  mutate(
+    aisle = str_to_title(aisle) %>%
+            as.factor() %>%
+            fct_reorder(n_orders, .desc = FALSE)
+  ) %>%
+  plot_ly(
+    x = ~n_orders,
+    y = ~aisle,
+    type = "bar",
+    mode = "markers",
+    hoverinfo = "text",
+    text = ~paste("</br> Aisle:", aisle,
+                  "</br> # Orders:", n_orders),
+    color = ~aisle,
+    colors = "YlOrRd"
+  ) %>%
+  layout(
+    title  = "Number of Orders by Aisle",
+    xaxis  = list(title = "Number of Orders"),
+    yaxis  = list(title = "Aisle", tickfont = list(size = 6)),
+    showlegend = FALSE
+  )
+
+plot1_new
+```

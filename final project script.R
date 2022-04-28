@@ -2,26 +2,37 @@
 
 library(tidyverse)
 library(DataExplorer)
+library(forcats)
+library(gt)
+library(janitor)
+library(paletteer)
+library(webshot)
+library(magrittr)
+library(purrr)
+library(cfbplotR)
+library(sf)
+library(leaflet)
+library(plotly)
 
 # Load data
 
-df <- read_csv(file = './data/soccer.csv') %>%
+soccer.df <- read_csv(file = './data/soccer.csv') %>%
 filter(!is.na(player))
 
 
 # Exploratory data analysis
 
 
-introduce(df)
+introduce(soccer.df)
 
-plot_intro(df, 
+plot_intro(soccer.df, 
            title ="Introductory plot", 
            ggtheme =theme_bw(), 
            theme_config=theme(legend.position="bottom", plot.title = element_text(hjust = 0.5)))
 
 # Plot missing observations by feature
 
-plot_missing(df, 
+plot_missing(soccer.df, 
              title ="Plot missing observations by feature", 
              ggtheme =theme_bw(), 
              theme_config=theme(legend.position="bottom", plot.title = element_text(hjust = 0.5)))
@@ -32,25 +43,27 @@ plot_missing(df,
 
 # Check that variables are the correct type 
 
-str(df$value)
-str(df$squad)
-str(df$nationality)
-str(df$position)
+str(soccer.df$value)
+str(soccer.df$squad)
+str(soccer.df$nationality)
+str(soccer.df$position)
 
 # Modify variables that were wrong variable type
 
 
-df$squad <- as.factor(df$squad)
-df$nationality <- as.factor(df$nationality)
-df$position <- as.factor(df$position)
+soccer.df$squad <- as.factor(soccer.df$squad)
+soccer.df$nationality <- as.factor(soccer.df$nationality)
+soccer.df$position <- as.factor(soccer.df$position)
 
 # do this with tidyverse
 
-df <- df %>% mutate(value_millions = (value/1000000))
+soccer.df <- soccer.df %>% 
+  mutate(value_millions = (value/1000000)) %>%
+  separate(nationality, into = c("nationality", "country_origin"), sep = " ")
 
 # Ranking of players by value and number of goal
 
-df <-df %>%
+soccer.df <- soccer.df %>%
 arrange(desc(value)) %>%
 mutate(ranking_player_value = 1:length(player)) %>%
 arrange(desc(goals)) %>%
@@ -60,20 +73,20 @@ mutate(ranking_player_goals = 1:length(player))
 
 # Average value of players in all dataset 
 
-df %>%
+soccer.df %>%
 summarise(average_value_millions = round((mean(value_millions,na.rm=TRUE)),2)) %>%
 arrange(desc(average_value_millions))
 
 # Value top 5 by position
 
-df %>%
+soccer.df %>%
 group_by(position) %>%
 arrange(ranking_player_value) %>%
 slice(1:5) %>%
-mutate(average_value_top_5 = round((mean(value,na.rm=TRUE)),2)) %>%
+mutate(average_value_top_5 = round((mean(value,na.rm = TRUE)),2)) %>%
 arrange(desc(average_value_top_5)) %>%
 select(c(player,squad,nationality,position,goals,assists,value,ranking_player_value)) %>%
-rename("Player"=player,"Team"=squad,"Nationality"=nationality,"Goals"=goals,"Assists"=assists,"Value"=value,"Overall ranking value"=ranking_player_value) %>%
+rename("Player" = player,"Team" = squad,"Nationality" = nationality,"Goals" = goals,"Assists" = assists,"Value" = value,"Overall ranking value" = ranking_player_value) %>%
 gt() %>%
 fmt_number(
 columns = where(is.numeric), 
@@ -88,7 +101,7 @@ tab_source_note("Data from season 18/19 extracted from Kaggle")
 
 # Value top 5 by nationality
 
-df %>%
+soccer.df %>%
   group_by(nationality) %>%
   arrange(ranking_player_value) %>%
   slice(1:5) %>%
@@ -110,7 +123,7 @@ df %>%
 
 # Value top 5 by team
 
-df %>%
+soccer.df %>%
   group_by(squad) %>%
   arrange(ranking_player_value) %>%
   slice(1:5) %>%
@@ -133,13 +146,13 @@ df %>%
 
 # Average goals of players in all dataset 
 
-df %>%
+soccer.df %>%
   summarise(goals = round((mean(goals,na.rm=TRUE)),2)) %>%
   arrange(desc(goals))
 
 # Average goals of players by position
 
-df %>%
+soccer.df %>%
   group_by(position) %>%
   arrange(ranking_player_goals) %>%
   slice(1:5) %>%
@@ -162,7 +175,7 @@ df %>%
 
 # Average goals of players by nationality
 
-df %>%
+soccer.df %>%
   group_by(nationality) %>%
   arrange(ranking_player_goals) %>%
   slice(1:5) %>%
@@ -184,7 +197,7 @@ df %>%
 
 # Average goals of players by team
 
-df %>%
+soccer.df %>%
   group_by(squad) %>%
   arrange(ranking_player_goals) %>%
   slice(1:5) %>%
@@ -203,7 +216,237 @@ df %>%
   tab_header(title = md("**Top 5 highest goal scorers by team**")) %>%
   tab_source_note("Data from season 18/19 extracted from Kaggle")
 
-
 # Q2 What are the soccer teams (squad) and leagues for which the top scorers played?
+soccer.df %>%
+  select(player, squad, league, goals) %>%
+  arrange(desc(goals)) %>%
+  slice(1:20) %>%
+  rename(
+    "Player" = player, 
+    "Team"   = squad, 
+    "League" = league, 
+    "Goals"  = goals) %>%
+  gt() %>%
+  tab_header("Top 20 Scorers - Teams and Leagues") %>%
+  data_color(columns = "Goals",
+             colors = scales::col_numeric(
+               palette = c("Purples"),
+               domain  = c(10, 40))) %>%
+  data_color(columns = "League",
+             colors = scales::col_factor(
+               palette = c("Spectral"),
+               domain  = c("La Liga", "Ligue 1", "Serie A", "Bundesliga", "Premier League")))
+
+s1 <- soccer.df %>%
+  select(player, squad, league, goals, assists, value_millions, position2) %>%
+  arrange(desc(goals)) %>%
+  slice(1:20) %>%
+  mutate(player = fct_reorder(player, desc(goals))) %>%
+  mutate(
+    text_label = str_c("Value, Nationality, and Squad and More",
+                       "\nTeam: ", squad,
+                       "\nValue: ", value_millions,
+                       "\nAssists: ", assists,
+                       "\nPosition: ", position2)) %>%
+  rename("League" = league) %>%
+  ggplot() +
+    geom_col(aes(x = player, y = goals, fill = League, text = text_label)) +
+  labs(
+    x     = "Player",
+    y     = "Goals",
+    title = "Number of Goals by Player"
+  ) +
+  scale_fill_manual(values = c("#B2182B", "#D6604D", "#F4A582", "#4393C3", "#2166AC")) +
+  theme(axis.text.x = element_text(angle   = 90,
+                                   vjust = 0.5,
+                                   hjust = 1,
+                                   size  = 10))
+
+ggplotly(s1, tooltip = "text")
+           
+soccer.df %>%
+    select(player, squad, league, goals, assists, value_millions, position2) %>%
+    arrange(desc(goals)) %>%
+    slice(1:20) %>%
+  mutate(player = fct_reorder(player, desc(goals))) %>%
+  plot_ly(
+    x = ~player,
+    y = ~goals,
+    type = "bar",
+    mode = "markers",
+    hoverinfo = "text",
+    text = ~paste("</br> Team:", squad,
+                  "</br> Assistis:", assists,
+                  "</br> Value (M):", value_millions,
+                  "</br> Position:", position2),
+    color = ~league,
+    colors = "Spectral"
+  ) %>%
+  layout(
+      title  = "Number of Goals by Player",
+      xaxis  = list(title = "Player"),
+      yaxis  = list(title = "Goals"))
+  
 
 # Q3 What are the top 10 nationalities with the highest number of goals scored by their top 5 scorers?
+
+top5_players <- soccer.df %>%
+  group_by(country_origin, player) %>%
+  summarise(total_goals = sum(goals)) %>%
+  arrange(country_origin, desc(total_goals)) %>%
+  slice(1:5) %>%
+  ungroup()
+
+top10_countries <- soccer.df %>%
+  filter(player %in% top5_players$player) %>%
+  group_by(country_origin) %>%
+  summarise(total_goals_country = sum(goals)) %>%
+  arrange(desc(total_goals_country)) %>%
+  slice(1:10)
+
+goals_10countries <- soccer.df %>%
+  filter(country_origin %in% top10_countries$country_origin,
+         player %in% top5_players$player) %>%
+  group_by(country_origin) %>%
+  mutate(total_goals_country = sum(goals)) %>%
+  select(player, country_origin, squad, league, goals, total_goals_country) %>%
+  arrange(desc(total_goals_country)) %>%
+  select(player, country_origin, squad, league, goals) %>%
+  rename("Player" = player, "Team" = squad, "League" = league, "Goals" = goals) %>%
+  gt() %>%
+  summary_rows(
+    groups  = TRUE,
+    columns = contains(c("Goals")),
+    fns = list("# Goals per Country" = ~sum(., na.rm = TRUE)),
+    formatter = fmt_number,
+    decimals  = 0,
+    suffixing = TRUE
+  ) %>%
+  tab_style(
+    style = list(
+      cell_text(weight = "bold")
+    ),
+    locations = cells_column_labels(everything())
+  ) %>% 
+  cols_align(align = c("center"), columns = everything()) %>%
+  opt_table_lines(extent = "default") %>%
+  tab_options(
+    column_labels.border.top.color = "black",
+    column_labels.border.top.width = px(2),
+    column_labels.border.bottom.color = "black",
+    table_body.hlines.color   = "white",
+    table.border.bottom.color = "black",
+    table.border.bottom.width = px(2)
+  ) %>%
+  data_color(
+    columns = "Goals",
+    colors = scales::col_numeric(
+      palette = c("PuBu"),
+      domain  = c(0, 40))) %>%
+  tab_source_note(
+    source_note = md("*Data merged from transfermarkt.de and fbref.com by Rafael Stepien and available on Kaggle*"))
+  
+
+
+#### LEAFLET
+
+ioc_country.df <- read_csv("./data/NOC_countries.csv") %>%
+  select(Country, NOC)
+
+soccer_world.df <- left_join(
+  soccer.df, 
+  ioc_country.df, 
+  by = c("country_origin" = "NOC") #zipcode in first, zip_code second
+) 
+
+top5_players_new <- soccer_world.df %>%
+  group_by(Country, player) %>%
+  summarise(total_goals = sum(goals)) %>%
+  arrange(Country, desc(total_goals)) %>%
+  slice(1:5) %>%
+  ungroup()
+
+top10_countries_new <- soccer_world.df %>%
+  filter(player %in% top5_players_new$player) %>%
+  group_by(Country) %>%
+  summarise(total_goals_country = sum(goals)) %>%
+  arrange(desc(total_goals_country)) %>%
+  slice(1:10)
+
+goals_10countries_new <- soccer_world.df %>%
+  filter(Country %in% top10_countries_new$Country,
+         player %in% top5_players_new$player) %>%
+  group_by(Country) %>%
+  mutate(total_goals_country = sum(goals)) %>%
+  select(player, Country, squad, league, goals, total_goals_country) %>%
+  arrange(desc(total_goals_country)) %>%
+  select(player, Country, squad, league, goals) %>%
+  rename("Player" = player, "Team" = squad, "League" = league, "Goals" = goals) %>%
+  gt() %>%
+  summary_rows(
+    groups  = TRUE,
+    columns = contains(c("Goals")),
+    fns = list("# Goals per Country" = ~sum(., na.rm = TRUE)),
+    formatter = fmt_number,
+    decimals  = 0,
+    suffixing = TRUE
+  ) %>%
+  tab_style(
+    style = list(
+      cell_text(weight = "bold")
+    ),
+    locations = cells_column_labels(everything())
+  ) %>% 
+  cols_align(align = c("center"), columns = everything()) %>%
+  opt_table_lines(extent = "default") %>%
+  tab_options(
+    column_labels.border.top.color = "black",
+    column_labels.border.top.width = px(2),
+    column_labels.border.bottom.color = "black",
+    table_body.hlines.color   = "white",
+    table.border.bottom.color = "black",
+    table.border.bottom.width = px(2)
+  ) %>%
+  data_color(
+    columns = "Goals",
+    colors = scales::col_numeric(
+      palette = c("PuBu"),
+      domain  = c(0, 40))) %>%
+  tab_source_note(
+    source_note = md("*Data merged from transfermarkt.de and fbref.com by Rafael Stepien and available on Kaggle*"))
+
+
+### Joining soccer.df data with world boundaries data
+
+world_boundaries.df <- st_read("./data/world-administrative-boundaries.shp", quiet = TRUE) %>%
+  janitor::clean_names()
+
+world_boundaries2.df <- st_read("./data/data2/world_countries_2020.shp", quiet = TRUE) %>%
+  janitor::clean_names() %>%
+  select(cntry_name, geometry)
+
+soccer_world.df <- left_join(
+  soccer_world.df, 
+  world_boundaries.df, 
+  by = c("Country" = "name") 
+) 
+
+library(ggthemes)
+ggplot(data = soccer_world.df) +
+  geom_sf(aes(fill = Country)) +
+  theme_map()
+  
+
+leaflet(data = soccer_world.df) %>%
+  addProviderTiles('CartoDB.Positron') %>% 
+  addCircleMarkers(
+    color   = ~country_origin,
+    opacity = 0.4,
+    weight  = 2, #outline strength
+    radius  = 4 #size of circle
+  ) %>%
+  addLegend(
+    title    = "Store Type",
+    position = "bottomright",
+    colors   = ~
+  )
