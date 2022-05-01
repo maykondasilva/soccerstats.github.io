@@ -13,6 +13,13 @@ library(cfbplotR)
 library(sf)
 library(leaflet)
 library(plotly)
+library(lubridate)
+library(ggridges)
+library(tigris)
+library(ggsflabel)
+library(ggthemes)
+library(htmltools)
+library(htmlwidgets)
 
 # Load data
 
@@ -418,35 +425,50 @@ goals_10countries_new <- soccer_world.df %>%
 
 ### Joining soccer.df data with world boundaries data
 
-world_boundaries.df <- st_read("./data/world-administrative-boundaries.shp", quiet = TRUE) %>%
-  janitor::clean_names()
-
-world_boundaries2.df <- st_read("./data/data2/world_countries_2020.shp", quiet = TRUE) %>%
+world_boundaries3.df <- read_csv("./data/world_shapefile.csv") %>%
   janitor::clean_names() %>%
-  select(cntry_name, geometry)
+  select(geo_point_coord, english_name)
 
-soccer_world.df <- left_join(
+world_boundaries3.df <- world_boundaries3.df %>%
+  separate(geo_point_coord, into = c("lat", "long"), sep = ",") %>%
+  mutate(lat = as.numeric(lat),
+         long = as.numeric(long))
+
+soccer_world3.df <- inner_join(
   soccer_world.df, 
-  world_boundaries.df, 
-  by = c("Country" = "name") 
-) 
+  world_boundaries3.df, 
+  by = c("Country" = "english_name") 
+)
 
-library(ggthemes)
-ggplot(data = soccer_world.df) +
-  geom_sf(aes(fill = Country)) +
-  theme_map()
-  
+# Initialize the color pallete (continuous)
+my_pallete <- colorFactor(c("BuPu"), 
+                          domain = soccer_world3.df$Country)
 
-leaflet(data = soccer_world.df) %>%
+# Number of players per country
+soccer_world3.df <- soccer_world3.df %>%
+  group_by(Country) %>%
+  mutate(no_players = n())
+
+#Add a text label like normal
+soccer_world3.df <- soccer_world3.df %>%
+  mutate(
+    text_label = str_c(Country,
+                       "<br/># Players: ",
+                       no_players
+    )
+  )
+
+
+leaflet(data = soccer_world3.df) %>%
   addProviderTiles('CartoDB.Positron') %>% 
-  addCircleMarkers(
-    color   = ~country_origin,
-    opacity = 0.4,
-    weight  = 2, #outline strength
-    radius  = 4 #size of circle
+  addMarkers(lng = ~long, 
+             lat = ~lat,
+             label = ~map(text_label, HTML)
   ) %>%
   addLegend(
-    title    = "Store Type",
-    position = "bottomright",
-    colors   = ~
+    title    = "Player and their Nationalities",
+    pal = my_pallete,
+    values = ~soccer_world3.df$Country,
+    position = "bottomright"
   )
+
