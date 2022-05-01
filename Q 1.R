@@ -14,6 +14,11 @@ library(sf)
 library(leaflet)
 library(plotly)
 
+# Set plots aspect
+
+theme_set(theme_bw() + theme(plot.title = element_text(hjust = 0.5), legend.position = "none"))
+
+
 # ---- Data cleaning (is also in the other script------
 
 # We need to upload all the data in the first part of the script
