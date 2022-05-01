@@ -16,7 +16,7 @@ library(plotly)
 
 # Set plots aspect
 
-theme_set(theme_bw() + theme(plot.title = element_text(hjust = 0.5), legend.position = "none"))
+theme_set(theme_bw() + theme(plot.title = element_text(hjust = 0.5)))
 
 
 # ---- Data cleaning (is also in the other script------
@@ -113,7 +113,7 @@ Plot_valuable_players <- soccer_world.df %>%
   ggplot() +
   geom_col(aes(x = Value, y = fct_reorder(Player,value), fill=Goals, text = text_label)) +
   labs(
-    x     = "Value ( millions USD)",
+    x     = "Value (millions USD)",
     y     = "Player",
     title = "Most valuable players in top 6 teams"
   ) +
