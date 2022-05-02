@@ -245,14 +245,14 @@ soccer.df %>%
                domain  = c("La Liga", "Ligue 1", "Serie A", "Bundesliga", "Premier League")))
 
 s1 <- soccer.df %>%
-  select(player, squad, league, goals, assists, value_millions, position2) %>%
+  select(player, squad, league, country_origin, goals, assists, value_millions, position2) %>%
   arrange(desc(goals)) %>%
   slice(1:20) %>%
   mutate(player = fct_reorder(player, desc(goals))) %>%
   mutate(
-    text_label = str_c("Value, Nationality, and Squad and More",
+    text_label = str_c("\nNationality: ", country_origin,
                        "\nTeam: ", squad,
-                       "\nValue: ", value_millions,
+                       "\nValue (M Euros): ", value_millions,
                        "\nAssists: ", assists,
                        "\nPosition: ", position2)) %>%
   rename("League" = league) %>%
@@ -264,15 +264,17 @@ s1 <- soccer.df %>%
     title = "Number of Goals by Player"
   ) +
   scale_fill_manual(values = c("#B2182B", "#D6604D", "#F4A582", "#4393C3", "#2166AC")) +
-  theme(axis.text.x = element_text(angle   = 90,
+  theme(axis.text.x = element_text(angle   = 0,
                                    vjust = 0.5,
                                    hjust = 1,
-                                   size  = 10))
+                                   size  = 10)) +
+  coord_flip()
 
 ggplotly(s1, tooltip = "text")
-           
+
+## Now using Plotly
 soccer.df %>%
-    select(player, squad, league, goals, assists, value_millions, position2) %>%
+    select(player, country_origin, squad, league, goals, assists, value_millions, position2) %>%
     arrange(desc(goals)) %>%
     slice(1:20) %>%
   mutate(player = fct_reorder(player, desc(goals))) %>%
@@ -283,20 +285,21 @@ soccer.df %>%
     mode = "markers",
     hoverinfo = "text",
     text = ~paste("</br> Team:", squad,
-                  "</br> Assistis:", assists,
-                  "</br> Value (M):", value_millions,
-                  "</br> Position:", position2),
-    color = ~league,
-    colors = "Spectral"
+                  "</br> Value (M Euros):", value_millions,
+                  "</br> Position:", position2,
+                  "</br> Assistis:", assists),
+    color = ~country_origin,
+    colors = "viridis"
   ) %>%
   layout(
-      title  = "Number of Goals by Player",
-      xaxis  = list(title = "Player"),
-      yaxis  = list(title = "Goals"))
+    title  = "Number of Goals by Player",
+    xaxis  = list(title = "Player"),
+    yaxis  = list(title = "Goals"))
   
 
 # Q3 What are the top 10 nationalities with the highest number of goals scored by their top 5 scorers?
 
+# Top 5 scorers by country
 top5_players <- soccer.df %>%
   group_by(country_origin, player) %>%
   summarise(total_goals = sum(goals)) %>%
@@ -304,6 +307,7 @@ top5_players <- soccer.df %>%
   slice(1:5) %>%
   ungroup()
 
+# Top 10 coountries by number of goals scored by top 5 scorers
 top10_countries <- soccer.df %>%
   filter(player %in% top5_players$player) %>%
   group_by(country_origin) %>%
@@ -311,6 +315,7 @@ top10_countries <- soccer.df %>%
   arrange(desc(total_goals_country)) %>%
   slice(1:10)
 
+# GT table
 goals_10countries <- soccer.df %>%
   filter(country_origin %in% top10_countries$country_origin,
          player %in% top5_players$player) %>%
@@ -353,6 +358,22 @@ goals_10countries <- soccer.df %>%
   tab_source_note(
     source_note = md("*Data merged from transfermarkt.de and fbref.com by Rafael Stepien and available on Kaggle*"))
   
+## Q3 - FIGURE = GRAPH
+
+goals_10countries_ggplot <- soccer.df %>%
+  filter(country_origin %in% top10_countries$country_origin,
+         player %in% top5_players$player) %>%
+  group_by(country_origin) %>%
+  summarise(total_goals_country = sum(goals)) %>%
+  ungroup() %>%
+  mutate(country_origin = fct_reorder(country_origin, total_goals_country, .desc = TRUE)) %>%
+  ggplot() +
+  geom_col(aes(x = country_origin, y = total_goals_country, fill = country_origin)) +
+  scale_fill_viridis_d("Country") +
+  labs(title = "Top 10 Countries by No. of Goals from their Top 5 Scorers",
+       x = "Country of Origin",
+       y = "Number of Goals") +
+  theme(legend.position = "none")
 
 
 #### LEAFLET
@@ -425,50 +446,83 @@ goals_10countries_new <- soccer_world.df %>%
 
 ### Joining soccer.df data with world boundaries data
 
-world_boundaries3.df <- read_csv("./data/world_shapefile.csv") %>%
+world_boundaries.df <- read_csv("./data/world_coordinates.csv") %>%
   janitor::clean_names() %>%
-  select(geo_point_coord, english_name)
+  select(geo_point_coord, english_name, continent)
 
-world_boundaries3.df <- world_boundaries3.df %>%
+world_boundaries.df <- world_boundaries.df %>%
   separate(geo_point_coord, into = c("lat", "long"), sep = ",") %>%
   mutate(lat = as.numeric(lat),
          long = as.numeric(long))
 
-soccer_world3.df <- inner_join(
+soccer_world2.df <- inner_join(
   soccer_world.df, 
-  world_boundaries3.df, 
+  world_boundaries.df, 
   by = c("Country" = "english_name") 
 )
 
 # Initialize the color pallete (continuous)
 my_pallete <- colorFactor(c("BuPu"), 
-                          domain = soccer_world3.df$Country)
+                          domain = soccer_world2.df$Country)
+
 
 # Number of players per country
-soccer_world3.df <- soccer_world3.df %>%
+soccer_world2.df <- soccer_world2.df %>%
   group_by(Country) %>%
-  mutate(no_players = n())
+  mutate(no_players = n(),
+         no_goals = sum(goals))
 
 #Add a text label like normal
-soccer_world3.df <- soccer_world3.df %>%
+soccer_world2.df <- soccer_world2.df %>%
   mutate(
     text_label = str_c(Country,
                        "<br/># Players: ",
-                       no_players
+                       no_players,
+                       "<br/># Goals per Country: ",
+                       no_goals
     )
   )
 
-
-leaflet(data = soccer_world3.df) %>%
+# Create a leaflet 
+leaflet(data = soccer_world2.df) %>%
   addProviderTiles('CartoDB.Positron') %>% 
   addMarkers(lng = ~long, 
              lat = ~lat,
              label = ~map(text_label, HTML)
-  ) %>%
-  addLegend(
-    title    = "Player and their Nationalities",
-    pal = my_pallete,
-    values = ~soccer_world3.df$Country,
-    position = "bottomright"
   )
 
+# Color palette for continents
+pal <- colorFactor(c("viridis"), domain = c("Europe", "Asia", "Africa", "Oceania", "Americas"))
+leaflet_title <- c("Number of Soccer Players by Country")
+
+leaflet(data = soccer_world2.df) %>%
+  addProviderTiles('CartoDB.Positron') %>% 
+  addCircleMarkers(lng = ~long, 
+                   lat = ~lat,
+                   radius = ~(no_players/20),
+                   color = ~pal(continent),
+                   opacity = 0.4,
+                   label = ~map(text_label, HTML)
+  ) %>%
+  addLegend(
+    title    = "Continent",
+    pal      = pal,
+    values   = ~soccer_world2.df$continent,
+    position = "bottomright"
+  ) %>%
+  addControl(leaflet_title, position = "bottomleft")
+
+  
+## Trying other things
+
+leaflet(data = soccer_world2.df) %>%
+  addProviderTiles('CartoDB.Positron') %>% 
+  addCircleMarkers(lng = ~long, 
+             lat = ~lat,
+             options = markerOptions(col = ~continent),
+             color = ~pal,
+             radius = ~(no_players),
+             stroke = TRUE, fillOpacity = 1,
+             label = ~map(text_label, HTML),
+             clusterOptions = markerClusterOptions()
+  )
