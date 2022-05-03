@@ -6,22 +6,18 @@ output_dir: "."
 navbar:
   title: "Home"
   right:
-    - text: "Professional Documents"
+    - text: "FlexDashboard"
       menu:
-          - text: "Resume"
-            href: resume.html
-    - text: "Recent Work"
+          - text: "Soccer Stats FlexDashboard"
+            href: soccer_flexdashboard.html
+    - text: "Shiny Dashboard"
       menu:
-          - text: "Flexdashboard"
+          - text: "Soccer Stats Shiny Flexdashboard"
             href: flexdashboard_template_2.html
-          - text: "Spatial Dashboard"
-            href: spatial_dashboard.html
     - icon: fa-envelope fa-lg
       href: mailto:<mjdasilv@umn.edu>
     - icon: fa-github fa-lg
       href: http://github.com/maykondasilva/
-    - icon: fa-linkedin fa-lg
-      href: https://www.linkedin.com/in/maykon-junior-da-silva-424742140/
 output:  
    html_document:
     theme: flatly
