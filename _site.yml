@@ -6,14 +6,18 @@ output_dir: "."
 navbar:
   title: "Home"
   right:
-    - text: "FlexDashboard"
+    - text: "Soccer Stats"
       menu:
-          - text: "Soccer Stats FlexDashboard"
-            href: soccer_flexdashboard.html
-    - text: "Shiny Dashboard"
+          - text: "Question 1"
+            href: q1.html
+          - text: "Question 2"
+            href: q2.html
+          - text: "Question 3"
+            href: q3.html
+    - text: "Map of Soccer Players"
       menu:
-          - text: "Soccer Stats Shiny Flexdashboard"
-            href: flexdashboard_template_2.html
+          - text: "Map of Players - Leaflet"
+            href: soccer_leaflet.html
     - icon: fa-envelope fa-lg
       href: mailto:<mjdasilv@umn.edu>
     - icon: fa-github fa-lg

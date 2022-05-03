@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>What are the soccer teams and leagues for which the top 20 scorers played?</title>
+
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.10.0/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Soccer Stats FlexDashboards
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="q1.html">Question 1</a>
+    </li>
+    <li>
+      <a href="q2.html">Question 2</a>
+    </li>
+    <li>
+      <a href="q3.html">Question 3</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Shiny Dashboard
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="flexdashboard_template_2.html">Soccer Stats Shiny Flexdashboard</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="mailto:&lt;mjdasilv@umn.edu&gt;">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://github.com/maykondasilva/">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">What are the soccer teams and leagues for which the top 20 scorers played?</h1>
+
+</div>
+
+
+<hr />
+<div id="question-2---gt-table" class="section level3">
+<h3><strong>Question 2 - GT Table</strong></h3>
+<hr />
+<div id="rudshfnzlu" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#rudshfnzlu .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#rudshfnzlu .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#rudshfnzlu .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#rudshfnzlu .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#rudshfnzlu .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rudshfnzlu .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #000000;
+  border-bottom-style: black;
+  border-bottom-width: 2px;
+  border-bottom-color: #000000;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#rudshfnzlu .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#rudshfnzlu .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#rudshfnzlu .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#rudshfnzlu .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#rudshfnzlu .gt_column_spanner {
+  border-bottom-style: black;
+  border-bottom-width: 2px;
+  border-bottom-color: #000000;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#rudshfnzlu .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#rudshfnzlu .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#rudshfnzlu .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#rudshfnzlu .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#rudshfnzlu .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#rudshfnzlu .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rudshfnzlu .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#rudshfnzlu .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#rudshfnzlu .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rudshfnzlu .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#rudshfnzlu .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#rudshfnzlu .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rudshfnzlu .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rudshfnzlu .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#rudshfnzlu .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#rudshfnzlu .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rudshfnzlu .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#rudshfnzlu .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rudshfnzlu .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#rudshfnzlu .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rudshfnzlu .gt_left {
+  text-align: left;
+}
+
+#rudshfnzlu .gt_center {
+  text-align: center;
+}
+
+#rudshfnzlu .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#rudshfnzlu .gt_font_normal {
+  font-weight: normal;
+}
+
+#rudshfnzlu .gt_font_bold {
+  font-weight: bold;
+}
+
+#rudshfnzlu .gt_font_italic {
+  font-style: italic;
+}
+
+#rudshfnzlu .gt_super {
+  font-size: 65%;
+}
+
+#rudshfnzlu .gt_two_val_uncert {
+  display: inline-block;
+  line-height: 1em;
+  text-align: right;
+  font-size: 60%;
+  vertical-align: -0.25em;
+  margin-left: 0.1em;
+}
+
+#rudshfnzlu .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+#rudshfnzlu .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#rudshfnzlu .gt_slash_mark {
+  font-size: 0.7em;
+  line-height: 0.7em;
+  vertical-align: 0.15em;
+}
+
+#rudshfnzlu .gt_fraction_numerator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: 0.45em;
+}
+
+#rudshfnzlu .gt_fraction_denominator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: -0.05em;
+}
+</style>
+<table class="gt_table">
+  <thead class="gt_header">
+    <tr>
+      <th colspan="4" class="gt_heading gt_title gt_font_normal gt_bottom_border" style><strong>Top 20 Scorers - Teams and Leagues</strong></th>
+    </tr>
+    
+  </thead>
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="font-weight: bold;">Player</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="font-weight: bold;">Team</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="font-weight: bold;">League</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="font-weight: bold;">Goals</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_center">Lionel Messi</td>
+<td class="gt_row gt_center">Barcelona</td>
+<td class="gt_row gt_center" style="background-color: #3B528B; color: #FFFFFF;">La Liga</td>
+<td class="gt_row gt_center" style="background-color: #282828; color: #FFFFFF;">36</td></tr>
+    <tr><td class="gt_row gt_center">Kylian Mbappé</td>
+<td class="gt_row gt_center">Paris S-G</td>
+<td class="gt_row gt_center" style="background-color: #21908D; color: #FFFFFF;">Ligue 1</td>
+<td class="gt_row gt_center" style="background-color: #4C4C4C; color: #FFFFFF;">33</td></tr>
+    <tr><td class="gt_row gt_center">Fabio Quagliarella</td>
+<td class="gt_row gt_center">Sampdoria</td>
+<td class="gt_row gt_center" style="background-color: #FDE725; color: #000000;">Serie A</td>
+<td class="gt_row gt_center" style="background-color: #8D8D8D; color: #000000;">26</td></tr>
+    <tr><td class="gt_row gt_center">Duván Zapata</td>
+<td class="gt_row gt_center">Atalanta</td>
+<td class="gt_row gt_center" style="background-color: #FDE725; color: #000000;">Serie A</td>
+<td class="gt_row gt_center" style="background-color: #ABABAB; color: #000000;">23</td></tr>
+    <tr><td class="gt_row gt_center">Mohamed Salah</td>
+<td class="gt_row gt_center">Liverpool</td>
+<td class="gt_row gt_center" style="background-color: #5DC863; color: #000000;">Premier League</td>
+<td class="gt_row gt_center" style="background-color: #B5B5B5; color: #000000;">22</td></tr>
+    <tr><td class="gt_row gt_center">Sadio Mané</td>
+<td class="gt_row gt_center">Liverpool</td>
+<td class="gt_row gt_center" style="background-color: #5DC863; color: #000000;">Premier League</td>
+<td class="gt_row gt_center" style="background-color: #B5B5B5; color: #000000;">22</td></tr>
+    <tr><td class="gt_row gt_center">Pierre-Emerick Aubameyang</td>
+<td class="gt_row gt_center">Arsenal</td>
+<td class="gt_row gt_center" style="background-color: #5DC863; color: #000000;">Premier League</td>
+<td class="gt_row gt_center" style="background-color: #B5B5B5; color: #000000;">22</td></tr>
+    <tr><td class="gt_row gt_center">Robert Lewandowski</td>
+<td class="gt_row gt_center">Bayern Munich</td>
+<td class="gt_row gt_center" style="background-color: #440154; color: #FFFFFF;">Bundesliga</td>
+<td class="gt_row gt_center" style="background-color: #B5B5B5; color: #000000;">22</td></tr>
+    <tr><td class="gt_row gt_center">Nicolas Pépé</td>
+<td class="gt_row gt_center">Lille</td>
+<td class="gt_row gt_center" style="background-color: #21908D; color: #FFFFFF;">Ligue 1</td>
+<td class="gt_row gt_center" style="background-color: #B5B5B5; color: #000000;">22</td></tr>
+    <tr><td class="gt_row gt_center">Cristiano Ronaldo</td>
+<td class="gt_row gt_center">Juventus</td>
+<td class="gt_row gt_center" style="background-color: #FDE725; color: #000000;">Serie A</td>
+<td class="gt_row gt_center" style="background-color: #BFBFBF; color: #000000;">21</td></tr>
+    <tr><td class="gt_row gt_center">Sergio Agüero</td>
+<td class="gt_row gt_center">Manchester City</td>
+<td class="gt_row gt_center" style="background-color: #5DC863; color: #000000;">Premier League</td>
+<td class="gt_row gt_center" style="background-color: #BFBFBF; color: #000000;">21</td></tr>
+    <tr><td class="gt_row gt_center">Luis Suárez</td>
+<td class="gt_row gt_center">Barcelona</td>
+<td class="gt_row gt_center" style="background-color: #3B528B; color: #FFFFFF;">La Liga</td>
+<td class="gt_row gt_center" style="background-color: #BFBFBF; color: #000000;">21</td></tr>
+    <tr><td class="gt_row gt_center">Karim Benzema</td>
+<td class="gt_row gt_center">Real Madrid</td>
+<td class="gt_row gt_center" style="background-color: #3B528B; color: #FFFFFF;">La Liga</td>
+<td class="gt_row gt_center" style="background-color: #BFBFBF; color: #000000;">21</td></tr>
+    <tr><td class="gt_row gt_center">Iago Aspas</td>
+<td class="gt_row gt_center">Celta Vigo</td>
+<td class="gt_row gt_center" style="background-color: #3B528B; color: #FFFFFF;">La Liga</td>
+<td class="gt_row gt_center" style="background-color: #C6C6C6; color: #000000;">20</td></tr>
+    <tr><td class="gt_row gt_center">Cristhian Stuani</td>
+<td class="gt_row gt_center">Girona</td>
+<td class="gt_row gt_center" style="background-color: #3B528B; color: #FFFFFF;">La Liga</td>
+<td class="gt_row gt_center" style="background-color: #CECECE; color: #000000;">19</td></tr>
+    <tr><td class="gt_row gt_center">Edinson Cavani</td>
+<td class="gt_row gt_center">Paris S-G</td>
+<td class="gt_row gt_center" style="background-color: #21908D; color: #FFFFFF;">Ligue 1</td>
+<td class="gt_row gt_center" style="background-color: #D5D5D5; color: #000000;">18</td></tr>
+    <tr><td class="gt_row gt_center">Wissam Ben Yedder</td>
+<td class="gt_row gt_center">Sevilla</td>
+<td class="gt_row gt_center" style="background-color: #3B528B; color: #FFFFFF;">La Liga</td>
+<td class="gt_row gt_center" style="background-color: #D5D5D5; color: #000000;">18</td></tr>
+    <tr><td class="gt_row gt_center">Paco Alcácer</td>
+<td class="gt_row gt_center">Dortmund</td>
+<td class="gt_row gt_center" style="background-color: #440154; color: #FFFFFF;">Bundesliga</td>
+<td class="gt_row gt_center" style="background-color: #D5D5D5; color: #000000;">18</td></tr>
+    <tr><td class="gt_row gt_center">Jamie Vardy</td>
+<td class="gt_row gt_center">Leicester City</td>
+<td class="gt_row gt_center" style="background-color: #5DC863; color: #000000;">Premier League</td>
+<td class="gt_row gt_center" style="background-color: #D5D5D5; color: #000000;">18</td></tr>
+    <tr><td class="gt_row gt_center">Harry Kane</td>
+<td class="gt_row gt_center">Tottenham</td>
+<td class="gt_row gt_center" style="background-color: #5DC863; color: #000000;">Premier League</td>
+<td class="gt_row gt_center" style="background-color: #DCDCDC; color: #000000;">17</td></tr>
+  </tbody>
+  <tfoot class="gt_sourcenotes">
+    <tr>
+      <td class="gt_sourcenote" colspan="4">*Data merged from transfermarkt.de and fbref.com for 2018/19 season by Rafael Stepien and available on Kaggle*</td>
+    </tr>
+  </tfoot>
+  
+</table>
+</div>
+<hr />
+<p>Above we just showed the GT Table</p>
+<hr />
+</div>
+<div id="question-2---ggplotly" class="section level3" data-commentary-width="400">
+<h3><strong>Question 2 - GGPLOTLY</strong></h3>
+<hr />
+<div id="htmlwidget-df8c85d09ca5d92850b2" style="width:90%;height:768px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-df8c85d09ca5d92850b2">{"x":{"data":[{"orientation":"h","width":[0.899999999999999,0.899999999999999],"base":[0,0],"x":[22,18],"y":[8,18],"text":["<br />Team: Bayern Munich","<br />Team: Dortmund"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(68,1,84,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Bundesliga","legendgroup":"Bundesliga","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"base":[0,0,0,0,0,0],"x":[36,21,21,20,19,18],"y":[1,12,11,14,15,19],"text":["<br />Team: Barcelona","<br />Team: Barcelona","<br />Team: Real Madrid","<br />Team: Celta Vigo","<br />Team: Girona","<br />Team: Sevilla"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(59,82,139,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"La Liga","legendgroup":"La Liga","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.9,0.899999999999999],"base":[0,0,0],"x":[33,22,18],"y":[2,6,16],"text":["<br />Team: Paris S-G","<br />Team: Lille","<br />Team: Paris S-G"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(33,144,140,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Ligue 1","legendgroup":"Ligue 1","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.899999999999999,0.9,0.899999999999999,0.899999999999999,0.899999999999999],"base":[0,0,0,0,0,0],"x":[22,22,22,21,18,17],"y":[5,9,7,13,17,20],"text":["<br />Team: Liverpool","<br />Team: Liverpool","<br />Team: Arsenal","<br />Team: Manchester City","<br />Team: Leicester City","<br />Team: Tottenham"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(93,200,99,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Premier League","legendgroup":"Premier League","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.9,0.899999999999999],"base":[0,0,0],"x":[26,23,21],"y":[3,4,10],"text":["<br />Team: Sampdoria","<br />Team: Atalanta","<br />Team: Juventus"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(253,231,37,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Serie A","legendgroup":"Serie A","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":39.013698630137,"r":7.30593607305936,"b":37.0278123702781,"l":171.689497716895},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Number of Goals by Player","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0.5,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-1.8,37.8],"tickmode":"array","ticktext":["0","10","20","30"],"tickvals":[0,10,20,30],"categoryorder":"array","categoryarray":["0","10","20","30"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":13.2835201328352},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"Goals","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,20.6],"tickmode":"array","ticktext":["Lionel Messi","Kylian Mbappé","Fabio Quagliarella","Duván Zapata","Mohamed Salah","Nicolas Pépé","Pierre-Emerick Aubameyang","Robert Lewandowski","Sadio Mané","Cristiano Ronaldo","Karim Benzema","Luis Suárez","Sergio Agüero","Iago Aspas","Cristhian Stuani","Edinson Cavani","Jamie Vardy","Paco Alcácer","Wissam Ben Yedder","Harry Kane"],"tickvals":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],"categoryorder":"array","categoryarray":["Lionel Messi","Kylian Mbappé","Fabio Quagliarella","Duván Zapata","Mohamed Salah","Nicolas Pépé","Pierre-Emerick Aubameyang","Robert Lewandowski","Sadio Mané","Cristiano Ronaldo","Karim Benzema","Luis Suárez","Sergio Agüero","Iago Aspas","Cristhian Stuani","Edinson Cavani","Jamie Vardy","Paco Alcácer","Wissam Ben Yedder","Harry Kane"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"Player","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"title":{"text":"League","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"c9621d6536b3":{"x":{},"y":{},"fill":{},"text":{},"type":"bar"}},"cur_data":"c9621d6536b3","visdat":{"c9621d6536b3":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

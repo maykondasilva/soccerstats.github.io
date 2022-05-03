@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>What are the top 10 nationalities with the highest number of goals scored by their top 5 scorers?</title>
+
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.10.0/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Soccer Stats FlexDashboards
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="q1.html">Question 1</a>
+    </li>
+    <li>
+      <a href="q2.html">Question 2</a>
+    </li>
+    <li>
+      <a href="q3.html">Question 3</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Shiny Dashboard
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="flexdashboard_template_2.html">Soccer Stats Shiny Flexdashboard</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="mailto:&lt;mjdasilv@umn.edu&gt;">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://github.com/maykondasilva/">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">What are the top 10 nationalities with the highest number of goals scored by their top 5 scorers?</h1>
+
+</div>
+
+
+<hr />
+<div id="question-3---gt-table" class="section level3">
+<h3><strong>Question 3 - GT Table</strong></h3>
+<hr />
+<div id="yhpjprmtmz" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#yhpjprmtmz .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#yhpjprmtmz .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#yhpjprmtmz .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#yhpjprmtmz .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#yhpjprmtmz .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#yhpjprmtmz .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#yhpjprmtmz .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#yhpjprmtmz .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#yhpjprmtmz .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#yhpjprmtmz .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#yhpjprmtmz .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#yhpjprmtmz .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#yhpjprmtmz .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#yhpjprmtmz .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#yhpjprmtmz .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#yhpjprmtmz .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#yhpjprmtmz .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#yhpjprmtmz .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#yhpjprmtmz .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#yhpjprmtmz .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#yhpjprmtmz .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#yhpjprmtmz .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#yhpjprmtmz .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#yhpjprmtmz .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#yhpjprmtmz .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#yhpjprmtmz .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#yhpjprmtmz .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#yhpjprmtmz .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#yhpjprmtmz .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#yhpjprmtmz .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#yhpjprmtmz .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#yhpjprmtmz .gt_left {
+  text-align: left;
+}
+
+#yhpjprmtmz .gt_center {
+  text-align: center;
+}
+
+#yhpjprmtmz .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#yhpjprmtmz .gt_font_normal {
+  font-weight: normal;
+}
+
+#yhpjprmtmz .gt_font_bold {
+  font-weight: bold;
+}
+
+#yhpjprmtmz .gt_font_italic {
+  font-style: italic;
+}
+
+#yhpjprmtmz .gt_super {
+  font-size: 65%;
+}
+
+#yhpjprmtmz .gt_two_val_uncert {
+  display: inline-block;
+  line-height: 1em;
+  text-align: right;
+  font-size: 60%;
+  vertical-align: -0.25em;
+  margin-left: 0.1em;
+}
+
+#yhpjprmtmz .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+#yhpjprmtmz .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#yhpjprmtmz .gt_slash_mark {
+  font-size: 0.7em;
+  line-height: 0.7em;
+  vertical-align: 0.15em;
+}
+
+#yhpjprmtmz .gt_fraction_numerator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: 0.45em;
+}
+
+#yhpjprmtmz .gt_fraction_denominator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: -0.05em;
+}
+</style>
+<table class="gt_table">
+  <thead class="gt_header">
+    <tr>
+      <th colspan="5" class="gt_heading gt_title gt_font_normal gt_bottom_border" style><strong>Top 10 Countries by their 5 Top Scorers</strong></th>
+    </tr>
+    
+  </thead>
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="font-weight: bold;">Player</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="font-weight: bold;">Team</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="font-weight: bold;">League</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="font-weight: bold;">Goals</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr class="gt_group_heading_row">
+      <td colspan="5" class="gt_group_heading">France</td>
+    </tr>
+    <tr class="gt_row_group_first"><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Kylian Mbappé</td>
+<td class="gt_row gt_center">Paris S-G</td>
+<td class="gt_row gt_center">Ligue 1</td>
+<td class="gt_row gt_center" style="background-color: #04639B; color: #FFFFFF;">33</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Karim Benzema</td>
+<td class="gt_row gt_center">Real Madrid</td>
+<td class="gt_row gt_center">La Liga</td>
+<td class="gt_row gt_center" style="background-color: #69A4CC; color: #000000;">21</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Wissam Ben Yedder</td>
+<td class="gt_row gt_center">Sevilla</td>
+<td class="gt_row gt_center">La Liga</td>
+<td class="gt_row gt_center" style="background-color: #89B1D4; color: #000000;">18</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Florian Thauvin</td>
+<td class="gt_row gt_center">Marseille</td>
+<td class="gt_row gt_center">Ligue 1</td>
+<td class="gt_row gt_center" style="background-color: #9DB9D9; color: #000000;">16</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Antoine Griezmann</td>
+<td class="gt_row gt_center">Atlético Madrid</td>
+<td class="gt_row gt_center">La Liga</td>
+<td class="gt_row gt_center" style="background-color: #A6BDDB; color: #000000;">15</td></tr>
+    <tr><td class="gt_row gt_right gt_stub gt_summary_row gt_first_summary_row thick gt_last_summary_row"># Goals per Country</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">103</td></tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="5" class="gt_group_heading">Argentina</td>
+    </tr>
+    <tr class="gt_row_group_first"><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Lionel Messi</td>
+<td class="gt_row gt_center">Barcelona</td>
+<td class="gt_row gt_center">La Liga</td>
+<td class="gt_row gt_center" style="background-color: #045382; color: #FFFFFF;">36</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Sergio Agüero</td>
+<td class="gt_row gt_center">Manchester City</td>
+<td class="gt_row gt_center">Premier League</td>
+<td class="gt_row gt_center" style="background-color: #69A4CC; color: #000000;">21</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Ángel Di María</td>
+<td class="gt_row gt_center">Paris S-G</td>
+<td class="gt_row gt_center">Ligue 1</td>
+<td class="gt_row gt_center" style="background-color: #BFC9E2; color: #000000;">12</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Mauro Icardi</td>
+<td class="gt_row gt_center">Inter</td>
+<td class="gt_row gt_center">Serie A</td>
+<td class="gt_row gt_center" style="background-color: #C8CDE4; color: #000000;">11</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Gonzalo Higuaín</td>
+<td class="gt_row gt_center">Chelsea</td>
+<td class="gt_row gt_center">Premier League</td>
+<td class="gt_row gt_center" style="background-color: #ECE7F2; color: #000000;">5</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Gonzalo Higuaín</td>
+<td class="gt_row gt_center">Milan</td>
+<td class="gt_row gt_center">Serie A</td>
+<td class="gt_row gt_center" style="background-color: #ECE7F2; color: #000000;">5</td></tr>
+    <tr><td class="gt_row gt_right gt_stub gt_summary_row gt_first_summary_row thick gt_last_summary_row"># Goals per Country</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">90</td></tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="5" class="gt_group_heading">Italy</td>
+    </tr>
+    <tr class="gt_row_group_first"><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Fabio Quagliarella</td>
+<td class="gt_row gt_center">Sampdoria</td>
+<td class="gt_row gt_center">Serie A</td>
+<td class="gt_row gt_center" style="background-color: #3089BD; color: #FFFFFF;">26</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Andrea Petagna</td>
+<td class="gt_row gt_center">SPAL</td>
+<td class="gt_row gt_center">Serie A</td>
+<td class="gt_row gt_center" style="background-color: #9DB9D9; color: #000000;">16</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Leonardo Pavoletti</td>
+<td class="gt_row gt_center">Cagliari</td>
+<td class="gt_row gt_center">Serie A</td>
+<td class="gt_row gt_center" style="background-color: #9DB9D9; color: #000000;">16</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Francesco Caputo</td>
+<td class="gt_row gt_center">Empoli</td>
+<td class="gt_row gt_center">Serie A</td>
+<td class="gt_row gt_center" style="background-color: #9DB9D9; color: #000000;">16</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Andrea Belotti</td>
+<td class="gt_row gt_center">Torino</td>
+<td class="gt_row gt_center">Serie A</td>
+<td class="gt_row gt_center" style="background-color: #A6BDDB; color: #000000;">15</td></tr>
+    <tr><td class="gt_row gt_right gt_stub gt_summary_row gt_first_summary_row thick gt_last_summary_row"># Goals per Country</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">89</td></tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="5" class="gt_group_heading">Spain</td>
+    </tr>
+    <tr class="gt_row_group_first"><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Iago Aspas</td>
+<td class="gt_row gt_center">Celta Vigo</td>
+<td class="gt_row gt_center">La Liga</td>
+<td class="gt_row gt_center" style="background-color: #74A9CF; color: #000000;">20</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Paco Alcácer</td>
+<td class="gt_row gt_center">Dortmund</td>
+<td class="gt_row gt_center">Bundesliga</td>
+<td class="gt_row gt_center" style="background-color: #89B1D4; color: #000000;">18</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Borja Iglesias</td>
+<td class="gt_row gt_center">Espanyol</td>
+<td class="gt_row gt_center">La Liga</td>
+<td class="gt_row gt_center" style="background-color: #93B5D6; color: #000000;">17</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Jaime Mata</td>
+<td class="gt_row gt_center">Getafe</td>
+<td class="gt_row gt_center">La Liga</td>
+<td class="gt_row gt_center" style="background-color: #AFC1DD; color: #000000;">14</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Jorge Molina</td>
+<td class="gt_row gt_center">Getafe</td>
+<td class="gt_row gt_center">La Liga</td>
+<td class="gt_row gt_center" style="background-color: #AFC1DD; color: #000000;">14</td></tr>
+    <tr><td class="gt_row gt_right gt_stub gt_summary_row gt_first_summary_row thick gt_last_summary_row"># Goals per Country</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">83</td></tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="5" class="gt_group_heading">England</td>
+    </tr>
+    <tr class="gt_row_group_first"><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Jamie Vardy</td>
+<td class="gt_row gt_center">Leicester City</td>
+<td class="gt_row gt_center">Premier League</td>
+<td class="gt_row gt_center" style="background-color: #89B1D4; color: #000000;">18</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Harry Kane</td>
+<td class="gt_row gt_center">Tottenham</td>
+<td class="gt_row gt_center">Premier League</td>
+<td class="gt_row gt_center" style="background-color: #93B5D6; color: #000000;">17</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Raheem Sterling</td>
+<td class="gt_row gt_center">Manchester City</td>
+<td class="gt_row gt_center">Premier League</td>
+<td class="gt_row gt_center" style="background-color: #93B5D6; color: #000000;">17</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Callum Wilson</td>
+<td class="gt_row gt_center">Bournemouth</td>
+<td class="gt_row gt_center">Premier League</td>
+<td class="gt_row gt_center" style="background-color: #AFC1DD; color: #000000;">14</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Glenn Murray</td>
+<td class="gt_row gt_center">Brighton</td>
+<td class="gt_row gt_center">Premier League</td>
+<td class="gt_row gt_center" style="background-color: #B7C5DF; color: #000000;">13</td></tr>
+    <tr><td class="gt_row gt_right gt_stub gt_summary_row gt_first_summary_row thick gt_last_summary_row"># Goals per Country</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">79</td></tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="5" class="gt_group_heading">Uruguay</td>
+    </tr>
+    <tr class="gt_row_group_first"><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Luis Suárez</td>
+<td class="gt_row gt_center">Barcelona</td>
+<td class="gt_row gt_center">La Liga</td>
+<td class="gt_row gt_center" style="background-color: #69A4CC; color: #000000;">21</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Cristhian Stuani</td>
+<td class="gt_row gt_center">Girona</td>
+<td class="gt_row gt_center">La Liga</td>
+<td class="gt_row gt_center" style="background-color: #7FADD1; color: #000000;">19</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Edinson Cavani</td>
+<td class="gt_row gt_center">Paris S-G</td>
+<td class="gt_row gt_center">Ligue 1</td>
+<td class="gt_row gt_center" style="background-color: #89B1D4; color: #000000;">18</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Maxi Gómez</td>
+<td class="gt_row gt_center">Celta Vigo</td>
+<td class="gt_row gt_center">La Liga</td>
+<td class="gt_row gt_center" style="background-color: #B7C5DF; color: #000000;">13</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Gastón Ramírez</td>
+<td class="gt_row gt_center">Sampdoria</td>
+<td class="gt_row gt_center">Serie A</td>
+<td class="gt_row gt_center" style="background-color: #F0EAF4; color: #000000;">4</td></tr>
+    <tr><td class="gt_row gt_right gt_stub gt_summary_row gt_first_summary_row thick gt_last_summary_row"># Goals per Country</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">75</td></tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="5" class="gt_group_heading">Germany</td>
+    </tr>
+    <tr class="gt_row_group_first"><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Kai Havertz</td>
+<td class="gt_row gt_center">Leverkusen</td>
+<td class="gt_row gt_center">Bundesliga</td>
+<td class="gt_row gt_center" style="background-color: #93B5D6; color: #000000;">17</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Marco Reus</td>
+<td class="gt_row gt_center">Dortmund</td>
+<td class="gt_row gt_center">Bundesliga</td>
+<td class="gt_row gt_center" style="background-color: #93B5D6; color: #000000;">17</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Timo Werner</td>
+<td class="gt_row gt_center">RB Leipzig</td>
+<td class="gt_row gt_center">Bundesliga</td>
+<td class="gt_row gt_center" style="background-color: #9DB9D9; color: #000000;">16</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Kevin Volland</td>
+<td class="gt_row gt_center">Leverkusen</td>
+<td class="gt_row gt_center">Bundesliga</td>
+<td class="gt_row gt_center" style="background-color: #AFC1DD; color: #000000;">14</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Leroy Sané</td>
+<td class="gt_row gt_center">Manchester City</td>
+<td class="gt_row gt_center">Premier League</td>
+<td class="gt_row gt_center" style="background-color: #D0D1E6; color: #000000;">10</td></tr>
+    <tr><td class="gt_row gt_right gt_stub gt_summary_row gt_first_summary_row thick gt_last_summary_row"># Goals per Country</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">74</td></tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="5" class="gt_group_heading">Brazil</td>
+    </tr>
+    <tr class="gt_row_group_first"><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Neymar</td>
+<td class="gt_row gt_center">Paris S-G</td>
+<td class="gt_row gt_center">Ligue 1</td>
+<td class="gt_row gt_center" style="background-color: #A6BDDB; color: #000000;">15</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Charles</td>
+<td class="gt_row gt_center">Eibar</td>
+<td class="gt_row gt_center">La Liga</td>
+<td class="gt_row gt_center" style="background-color: #AFC1DD; color: #000000;">14</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Richarlison</td>
+<td class="gt_row gt_center">Everton</td>
+<td class="gt_row gt_center">Premier League</td>
+<td class="gt_row gt_center" style="background-color: #B7C5DF; color: #000000;">13</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Roberto Firmino</td>
+<td class="gt_row gt_center">Liverpool</td>
+<td class="gt_row gt_center">Premier League</td>
+<td class="gt_row gt_center" style="background-color: #BFC9E2; color: #000000;">12</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Willian José</td>
+<td class="gt_row gt_center">Real Sociedad</td>
+<td class="gt_row gt_center">La Liga</td>
+<td class="gt_row gt_center" style="background-color: #C8CDE4; color: #000000;">11</td></tr>
+    <tr><td class="gt_row gt_right gt_stub gt_summary_row gt_first_summary_row thick gt_last_summary_row"># Goals per Country</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">65</td></tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="5" class="gt_group_heading">Belgium</td>
+    </tr>
+    <tr class="gt_row_group_first"><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Eden Hazard</td>
+<td class="gt_row gt_center">Chelsea</td>
+<td class="gt_row gt_center">Premier League</td>
+<td class="gt_row gt_center" style="background-color: #9DB9D9; color: #000000;">16</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Dries Mertens</td>
+<td class="gt_row gt_center">Napoli</td>
+<td class="gt_row gt_center">Serie A</td>
+<td class="gt_row gt_center" style="background-color: #9DB9D9; color: #000000;">16</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Romelu Lukaku</td>
+<td class="gt_row gt_center">Manchester Utd</td>
+<td class="gt_row gt_center">Premier League</td>
+<td class="gt_row gt_center" style="background-color: #BFC9E2; color: #000000;">12</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Dodi Lukebakio</td>
+<td class="gt_row gt_center">Düsseldorf</td>
+<td class="gt_row gt_center">Bundesliga</td>
+<td class="gt_row gt_center" style="background-color: #D0D1E6; color: #000000;">10</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Benito Raman</td>
+<td class="gt_row gt_center">Düsseldorf</td>
+<td class="gt_row gt_center">Bundesliga</td>
+<td class="gt_row gt_center" style="background-color: #D0D1E6; color: #000000;">10</td></tr>
+    <tr><td class="gt_row gt_right gt_stub gt_summary_row gt_first_summary_row thick gt_last_summary_row"># Goals per Country</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">64</td></tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="5" class="gt_group_heading">Portugal</td>
+    </tr>
+    <tr class="gt_row_group_first"><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Cristiano Ronaldo</td>
+<td class="gt_row gt_center">Juventus</td>
+<td class="gt_row gt_center">Serie A</td>
+<td class="gt_row gt_center" style="background-color: #69A4CC; color: #000000;">21</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Diogo Jota</td>
+<td class="gt_row gt_center">Wolves</td>
+<td class="gt_row gt_center">Premier League</td>
+<td class="gt_row gt_center" style="background-color: #D6D5E8; color: #000000;">9</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">André Silva</td>
+<td class="gt_row gt_center">Sevilla</td>
+<td class="gt_row gt_center">La Liga</td>
+<td class="gt_row gt_center" style="background-color: #D6D5E8; color: #000000;">9</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Rafael Leão</td>
+<td class="gt_row gt_center">Lille</td>
+<td class="gt_row gt_center">Ligue 1</td>
+<td class="gt_row gt_center" style="background-color: #DBDAEB; color: #000000;">8</td></tr>
+    <tr><td class="gt_row gt_right gt_stub"></td>
+<td class="gt_row gt_center">Bernardo Silva</td>
+<td class="gt_row gt_center">Manchester City</td>
+<td class="gt_row gt_center">Premier League</td>
+<td class="gt_row gt_center" style="background-color: #E1DEED; color: #000000;">7</td></tr>
+    <tr><td class="gt_row gt_right gt_stub gt_summary_row gt_first_summary_row thick gt_last_summary_row"># Goals per Country</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">&mdash;</td>
+<td class="gt_row gt_center gt_summary_row gt_first_summary_row thick gt_last_summary_row">54</td></tr>
+  </tbody>
+  <tfoot class="gt_sourcenotes">
+    <tr>
+      <td class="gt_sourcenote" colspan="5">*Data merged from transfermarkt.de and fbref.com for 2018/19 season by Rafael Stepien and available on Kaggle*</td>
+    </tr>
+  </tfoot>
+  
+</table>
+</div>
+<hr />
+<p>Above we just showed the GT Table</p>
+<hr />
+</div>
+<div id="question-3---ggplotly" class="section level3" data-commentary-width="400">
+<h3><strong>Question 3 - GGPLOTLY</strong></h3>
+<hr />
+<div id="htmlwidget-691b0a643723c9ceb75a" style="width:90%;height:768px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-691b0a643723c9ceb75a">{"x":{"data":[{"orientation":"h","width":[0.9,0.9],"base":[5,0],"x":[5,5],"y":[5,5],"text":["<br />Team: Chelsea<br />Value (M): $35.00<br />Assists: 0<br />Position: Forward - Centre-Forward","<br />Team: Milan<br />Value (M): $35.00<br />Assists: 0<br />Position: Forward - Centre-Forward"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(69,16,92,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[11],"y":[4],"text":"<br />Team: Inter<br />Value (M): $80.00<br />Assists: 4<br />Position: Forward - Centre-Forward","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(64,73,136,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[12],"y":[3],"text":"<br />Team: Paris S-G<br />Value (M): $40.00<br />Assists: 11<br />Position: Forward - Right Winger","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(63,81,137,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[21],"y":[2],"text":"<br />Team: Manchester City<br />Value (M): $65.00<br />Assists: 8<br />Position: Forward - Centre-Forward","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(42,151,136,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[36],"y":[1],"text":"<br />Team: Barcelona<br />Value (M): $150.00<br />Assists: 13<br />Position: Forward - Right Winger","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(253,231,37,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.9],"base":[0,0],"x":[10,10],"y":[5,4],"text":["<br />Team: Düsseldorf<br />Value (M): $18.00<br />Assists: 3<br />Position: Forward - Right Winger","<br />Team: Düsseldorf<br />Value (M): $12.00<br />Assists: 4<br />Position: Forward - Left Winger"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(66,65,132,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[12],"y":[3],"text":"<br />Team: Manchester Utd<br />Value (M): $75.00<br />Assists: 0<br />Position: Forward - Centre-Forward","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(63,81,137,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.9],"base":[0,0],"x":[16,16],"y":[2,1],"text":["<br />Team: Chelsea<br />Value (M): $150.00<br />Assists: 15<br />Position: Forward - Left Winger","<br />Team: Napoli<br />Value (M): $25.00<br />Assists: 11<br />Position: Forward - Centre-Forward"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(48,114,141,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[11],"y":[5],"text":"<br />Team: Real Sociedad<br />Value (M): $30.00<br />Assists: 5<br />Position: Forward - Centre-Forward","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(64,73,136,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x3","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[12],"y":[4],"text":"<br />Team: Liverpool<br />Value (M): $80.00<br />Assists: 6<br />Position: Forward - Centre-Forward","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(63,81,137,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x3","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[13],"y":[3],"text":"<br />Team: Everton<br />Value (M): $50.00<br />Assists: 1<br />Position: Forward - Centre-Forward","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(61,89,138,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x3","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[14],"y":[2],"text":"<br />Team: Eibar<br />Value (M): $2.00<br />Assists: 1<br />Position: Forward - Centre-Forward","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(57,98,139,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x3","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[15],"y":[1],"text":"<br />Team: Paris S-G<br />Value (M): $180.00<br />Assists: 7<br />Position: Forward - Left Winger","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(53,106,140,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x3","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[13],"y":[5],"text":"<br />Team: Brighton<br />Value (M): $3.00<br />Assists: 1<br />Position: Forward - Centre-Forward","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(61,89,138,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x4","yaxis":"y4","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[14],"y":[4],"text":"<br />Team: Bournemouth<br />Value (M): $30.00<br />Assists: 9<br />Position: Forward - Centre-Forward","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(57,98,139,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x4","yaxis":"y4","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.9],"base":[0,0],"x":[17,17],"y":[2,3],"text":["<br />Team: Tottenham<br />Value (M): $150.00<br />Assists: 4<br />Position: Forward - Centre-Forward","<br />Team: Manchester City<br />Value (M): $140.00<br />Assists: 9<br />Position: Forward - Left Winger"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(42,121,142,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x4","yaxis":"y4","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[18],"y":[1],"text":"<br />Team: Leicester City<br />Value (M): $20.00<br />Assists: 4<br />Position: Forward - Centre-Forward","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(43,129,140,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x4","yaxis":"y4","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[15],"y":[5],"text":"<br />Team: Atlético Madrid<br />Value (M): $130.00<br />Assists: 8<br />Position: Forward - Second Striker","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(53,106,140,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x5","yaxis":"y5","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[16],"y":[4],"text":"<br />Team: Marseille<br />Value (M): $45.00<br />Assists: 8<br />Position: Forward - Right Winger","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(48,114,141,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x5","yaxis":"y5","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[18],"y":[3],"text":"<br />Team: Sevilla<br />Value (M): $40.00<br />Assists: 9<br />Position: Forward - Centre-Forward","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(43,129,140,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x5","yaxis":"y5","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[21],"y":[2],"text":"<br />Team: Real Madrid<br />Value (M): $40.00<br />Assists: 6<br />Position: Forward - Centre-Forward","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(42,151,136,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x5","yaxis":"y5","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[33],"y":[1],"text":"<br />Team: Paris S-G<br />Value (M): $200.00<br />Assists: 7<br />Position: Forward - Left Winger","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(196,222,62,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x5","yaxis":"y5","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[10],"y":[5],"text":"<br />Team: Manchester City<br />Value (M): $100.00<br />Assists: 10<br />Position: Forward - Left Winger","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(66,65,132,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x6","yaxis":"y6","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[14],"y":[4],"text":"<br />Team: Leverkusen<br />Value (M): $30.00<br />Assists: 9<br />Position: Forward - Centre-Forward","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(57,98,139,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x6","yaxis":"y6","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[16],"y":[3],"text":"<br />Team: RB Leipzig<br />Value (M): $65.00<br />Assists: 7<br />Position: Forward - Centre-Forward","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(48,114,141,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x6","yaxis":"y6","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.9],"base":[0,0],"x":[17,17],"y":[1,2],"text":["<br />Team: Leverkusen<br />Value (M): $90.00<br />Assists: 3<br />Position: Midfielder - Attacking Midfield","<br />Team: Dortmund<br />Value (M): $50.00<br />Assists: 8<br />Position: Midfielder - Attacking Midfield"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(42,121,142,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x6","yaxis":"y6","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[15],"y":[5],"text":"<br />Team: Torino<br />Value (M): $35.00<br />Assists: 3<br />Position: Forward - Centre-Forward","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(53,106,140,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x7","yaxis":"y7","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.9,0.9],"base":[0,0,0],"x":[16,16,16],"y":[2,4,3],"text":["<br />Team: SPAL<br />Value (M): $20.00<br />Assists: 1<br />Position: Forward - Centre-Forward","<br />Team: Cagliari<br />Value (M): $12.00<br />Assists: 1<br />Position: Forward - Centre-Forward","<br />Team: Empoli<br />Value (M): $4.00<br />Assists: 3<br />Position: Forward - Centre-Forward"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(48,114,141,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x7","yaxis":"y7","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[26],"y":[1],"text":"<br />Team: Sampdoria<br />Value (M): $2.50<br />Assists: 8<br />Position: Forward - Centre-Forward","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(85,186,112,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x7","yaxis":"y7","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[7],"y":[5],"text":"<br />Team: Manchester City<br />Value (M): $100.00<br />Assists: 7<br />Position: Forward - Right Winger","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(70,38,107,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x8","yaxis":"y8","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[8],"y":[4],"text":"<br />Team: Lille<br />Value (M): $15.00<br />Assists: 3<br />Position: Forward - Centre-Forward","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(69,47,115,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x8","yaxis":"y8","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.9],"base":[0,0],"x":[9,9],"y":[3,2],"text":["<br />Team: Wolves<br />Value (M): $35.00<br />Assists: 5<br />Position: Forward - Left Winger","<br />Team: Sevilla<br />Value (M): $22.00<br />Assists: 0<br />Position: Forward - Centre-Forward"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(68,56,123,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x8","yaxis":"y8","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[21],"y":[1],"text":"<br />Team: Juventus<br />Value (M): $90.00<br />Assists: 8<br />Position: Forward - Left Winger","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(42,151,136,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x8","yaxis":"y8","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.9,0.9],"base":[0,0],"x":[14,14],"y":[4,5],"text":["<br />Team: Getafe<br />Value (M): $10.00<br />Assists: 6<br />Position: Forward - Centre-Forward","<br />Team: Getafe<br />Value (M): $2.00<br />Assists: 5<br />Position: Forward - Centre-Forward"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(57,98,139,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x9","yaxis":"y9","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[17],"y":[3],"text":"<br />Team: Espanyol<br />Value (M): $28.00<br />Assists: 3<br />Position: Forward - Centre-Forward","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(42,121,142,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x9","yaxis":"y9","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[18],"y":[2],"text":"<br />Team: Dortmund<br />Value (M): $37.00<br />Assists: 0<br />Position: Forward - Centre-Forward","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(43,129,140,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x9","yaxis":"y9","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[20],"y":[1],"text":"<br />Team: Celta Vigo<br />Value (M): $25.00<br />Assists: 6<br />Position: Forward - Centre-Forward","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(43,144,137,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x9","yaxis":"y9","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[4],"y":[5],"text":"<br />Team: Sampdoria<br />Value (M): $10.00<br />Assists: 4<br />Position: Midfielder - Attacking Midfield","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(68,1,84,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x10","yaxis":"y10","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[13],"y":[4],"text":"<br />Team: Celta Vigo<br />Value (M): $40.00<br />Assists: 5<br />Position: Forward - Centre-Forward","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(61,89,138,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x10","yaxis":"y10","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[18],"y":[3],"text":"<br />Team: Paris S-G<br />Value (M): $40.00<br />Assists: 5<br />Position: Forward - Centre-Forward","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(43,129,140,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x10","yaxis":"y10","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[19],"y":[2],"text":"<br />Team: Girona<br />Value (M): $7.00<br />Assists: 0<br />Position: Forward - Centre-Forward","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(44,136,139,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x10","yaxis":"y10","hoverinfo":"text","frame":null},{"orientation":"h","width":0.9,"base":0,"x":[21],"y":[1],"text":"<br />Team: Barcelona<br />Value (M): $50.00<br />Assists: 6<br />Position: Forward - Centre-Forward","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(42,151,136,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x10","yaxis":"y10","hoverinfo":"text","frame":null},{"x":[1],"y":[0],"name":"99_096dc4cae2825dc354c4158e0b7031a7","type":"scatter","mode":"markers","opacity":0,"hoverinfo":"skip","showlegend":false,"marker":{"color":[0,1],"colorscale":[[0,"#440154"],[0.00334448160535117,"#440355"],[0.00668896321070234,"#440456"],[0.0100334448160535,"#440656"],[0.0133779264214047,"#450857"],[0.0167224080267558,"#450958"],[0.020066889632107,"#450B59"],[0.0234113712374582,"#450D5A"],[0.0267558528428094,"#450E5B"],[0.0301003344481605,"#45105B"],[0.0334448160535117,"#45115C"],[0.0367892976588629,"#45135D"],[0.040133779264214,"#45145E"],[0.0434782608695652,"#45155F"],[0.0468227424749164,"#451760"],[0.0501672240802676,"#451860"],[0.0535117056856187,"#451961"],[0.0568561872909699,"#461A62"],[0.0602006688963211,"#461B63"],[0.0635451505016723,"#461D64"],[0.0668896321070234,"#461E65"],[0.0702341137123746,"#461F65"],[0.0735785953177258,"#462066"],[0.0769230769230769,"#462167"],[0.0802675585284281,"#462268"],[0.0836120401337793,"#462369"],[0.0869565217391304,"#46246A"],[0.0903010033444816,"#46256B"],[0.0936454849498328,"#46266B"],[0.0969899665551839,"#46276C"],[0.100334448160535,"#46286D"],[0.103678929765886,"#46296E"],[0.107023411371237,"#462A6F"],[0.110367892976589,"#452B70"],[0.11371237458194,"#452C70"],[0.117056856187291,"#452D71"],[0.120401337792642,"#452E72"],[0.123745819397993,"#452F73"],[0.127090301003345,"#453074"],[0.130434782608696,"#453175"],[0.133779264214047,"#453276"],[0.137123745819398,"#453377"],[0.140468227424749,"#453477"],[0.1438127090301,"#443578"],[0.147157190635452,"#443679"],[0.150501672240803,"#44367A"],[0.153846153846154,"#44377B"],[0.157190635451505,"#44387C"],[0.160535117056856,"#44397D"],[0.163879598662207,"#443A7D"],[0.167224080267559,"#433B7E"],[0.17056856187291,"#433C7F"],[0.173913043478261,"#433D80"],[0.177257525083612,"#433E81"],[0.180602006688963,"#433F82"],[0.183946488294314,"#424083"],[0.187290969899666,"#424184"],[0.190635451505017,"#424185"],[0.193979933110368,"#424285"],[0.197324414715719,"#414386"],[0.20066889632107,"#414487"],[0.204013377926421,"#414587"],[0.207357859531773,"#414687"],[0.210702341137124,"#414787"],[0.214046822742475,"#414888"],[0.217391304347826,"#404988"],[0.220735785953177,"#404A88"],[0.224080267558528,"#404A88"],[0.22742474916388,"#404B88"],[0.230769230769231,"#404C88"],[0.234113712374582,"#404D88"],[0.237458193979933,"#404E88"],[0.240802675585284,"#3F4F89"],[0.244147157190635,"#3F5089"],[0.247491638795987,"#3F5189"],[0.250836120401338,"#3F5289"],[0.254180602006689,"#3F5289"],[0.25752508361204,"#3E5389"],[0.260869565217391,"#3E5489"],[0.264214046822742,"#3E5589"],[0.267558528428094,"#3E568A"],[0.270903010033445,"#3D578A"],[0.274247491638796,"#3D588A"],[0.277591973244147,"#3D598A"],[0.280936454849498,"#3D598A"],[0.284280936454849,"#3C5A8A"],[0.287625418060201,"#3C5B8A"],[0.290969899665552,"#3C5C8A"],[0.294314381270903,"#3B5D8A"],[0.297658862876254,"#3B5E8B"],[0.301003344481605,"#3B5F8B"],[0.304347826086957,"#3A5F8B"],[0.307692307692308,"#3A608B"],[0.311036789297659,"#3A618B"],[0.31438127090301,"#39628B"],[0.317725752508361,"#39638B"],[0.321070234113712,"#38648B"],[0.324414715719064,"#38658C"],[0.327759197324415,"#38658C"],[0.331103678929766,"#37668C"],[0.334448160535117,"#37678C"],[0.337792642140468,"#36688C"],[0.341137123745819,"#36698C"],[0.344481605351171,"#356A8C"],[0.347826086956522,"#356B8C"],[0.351170568561873,"#346B8C"],[0.354515050167224,"#346C8D"],[0.357859531772575,"#336D8D"],[0.361204013377926,"#326E8D"],[0.364548494983278,"#326F8D"],[0.367892976588629,"#31708D"],[0.37123745819398,"#31718D"],[0.374581939799331,"#30718D"],[0.377926421404682,"#2F728D"],[0.381270903010033,"#2F738D"],[0.384615384615385,"#2E748E"],[0.387959866220736,"#2D758E"],[0.391304347826087,"#2C768E"],[0.394648829431438,"#2B778E"],[0.397993311036789,"#2B778E"],[0.40133779264214,"#2A788E"],[0.404682274247492,"#2A798E"],[0.408026755852843,"#2A7A8E"],[0.411371237458194,"#2B7B8E"],[0.414715719063545,"#2B7B8D"],[0.418060200668896,"#2B7C8D"],[0.421404682274247,"#2B7D8D"],[0.424749163879599,"#2B7E8D"],[0.42809364548495,"#2B7F8D"],[0.431438127090301,"#2B7F8D"],[0.434782608695652,"#2B808D"],[0.438127090301003,"#2B818C"],[0.441471571906354,"#2B828C"],[0.444816053511706,"#2B838C"],[0.448160535117057,"#2C838C"],[0.451505016722408,"#2C848C"],[0.454849498327759,"#2C858C"],[0.45819397993311,"#2C868B"],[0.461538461538461,"#2C878B"],[0.464882943143813,"#2C878B"],[0.468227424749164,"#2C888B"],[0.471571906354515,"#2C898B"],[0.474916387959866,"#2C8A8B"],[0.478260869565217,"#2C8B8B"],[0.481605351170569,"#2B8B8A"],[0.48494983277592,"#2B8C8A"],[0.488294314381271,"#2B8D8A"],[0.491638795986622,"#2B8E8A"],[0.494983277591973,"#2B8F8A"],[0.498327759197324,"#2B8F8A"],[0.501672240802676,"#2B9089"],[0.505016722408027,"#2B9189"],[0.508361204013378,"#2B9289"],[0.511705685618729,"#2B9389"],[0.51505016722408,"#2A9389"],[0.518394648829431,"#2A9489"],[0.521739130434783,"#2A9588"],[0.525083612040134,"#2A9688"],[0.528428093645485,"#2A9788"],[0.531772575250836,"#2A9788"],[0.535117056856187,"#299888"],[0.538461538461538,"#299987"],[0.54180602006689,"#299A87"],[0.545150501672241,"#299B87"],[0.548494983277592,"#289B87"],[0.551839464882943,"#289C87"],[0.555183946488294,"#289D87"],[0.558528428093645,"#279E86"],[0.561872909698997,"#279F86"],[0.565217391304348,"#27A086"],[0.568561872909699,"#26A086"],[0.57190635451505,"#26A186"],[0.575250836120401,"#26A285"],[0.578595317725752,"#25A385"],[0.581939799331104,"#25A485"],[0.585284280936455,"#24A485"],[0.588628762541806,"#24A585"],[0.591973244147157,"#23A684"],[0.595317725752508,"#23A784"],[0.598662207357859,"#22A884"],[0.602006688963211,"#24A884"],[0.605351170568562,"#27A983"],[0.608695652173913,"#2AAA82"],[0.612040133779264,"#2DAA81"],[0.615384615384615,"#2FAB81"],[0.618729096989967,"#32AC80"],[0.622073578595318,"#34AC7F"],[0.625418060200669,"#36AD7E"],[0.62876254180602,"#38AE7E"],[0.632107023411371,"#3AAE7D"],[0.635451505016722,"#3CAF7C"],[0.638795986622074,"#3EB07B"],[0.642140468227425,"#40B07B"],[0.645484949832776,"#42B17A"],[0.648829431438127,"#43B279"],[0.652173913043478,"#45B278"],[0.655518394648829,"#47B378"],[0.658862876254181,"#48B477"],[0.662207357859532,"#4AB476"],[0.665551839464883,"#4BB575"],[0.668896321070234,"#4DB675"],[0.672240802675585,"#4EB674"],[0.675585284280936,"#50B773"],[0.678929765886288,"#51B872"],[0.682274247491639,"#53B971"],[0.68561872909699,"#54B971"],[0.688963210702341,"#55BA70"],[0.692307692307692,"#57BB6F"],[0.695652173913043,"#58BB6E"],[0.698996655518395,"#59BC6D"],[0.702341137123746,"#5BBD6C"],[0.705685618729097,"#5CBD6C"],[0.709030100334448,"#5DBE6B"],[0.712374581939799,"#5EBF6A"],[0.71571906354515,"#5FBF69"],[0.719063545150502,"#61C068"],[0.722408026755853,"#62C167"],[0.725752508361204,"#63C166"],[0.729096989966555,"#64C266"],[0.732441471571906,"#65C365"],[0.735785953177257,"#66C464"],[0.739130434782609,"#67C463"],[0.74247491638796,"#69C562"],[0.745819397993311,"#6AC661"],[0.749163879598662,"#6BC660"],[0.752508361204013,"#6CC75F"],[0.755852842809364,"#6DC85E"],[0.759197324414716,"#6EC85D"],[0.762541806020067,"#6FC95C"],[0.765886287625418,"#70CA5B"],[0.769230769230769,"#71CB5A"],[0.77257525083612,"#72CB59"],[0.775919732441472,"#73CC58"],[0.779264214046823,"#74CD57"],[0.782608695652174,"#75CD56"],[0.785953177257525,"#76CE55"],[0.789297658862876,"#77CF54"],[0.792642140468227,"#78CF53"],[0.795986622073579,"#79D052"],[0.79933110367893,"#7AD151"],[0.802675585284281,"#7CD151"],[0.806020066889632,"#7FD250"],[0.809364548494983,"#81D250"],[0.812709030100334,"#84D34F"],[0.816053511705686,"#87D34F"],[0.819397993311037,"#89D34E"],[0.822742474916388,"#8CD44D"],[0.826086956521739,"#8ED44D"],[0.82943143812709,"#91D54C"],[0.832775919732441,"#93D54C"],[0.836120401337793,"#95D54B"],[0.839464882943144,"#98D64B"],[0.842809364548495,"#9AD64A"],[0.846153846153846,"#9DD74A"],[0.849498327759197,"#9FD749"],[0.852842809364548,"#A1D748"],[0.8561872909699,"#A3D848"],[0.859531772575251,"#A6D847"],[0.862876254180602,"#A8D947"],[0.866220735785953,"#AAD946"],[0.869565217391304,"#ACD946"],[0.872909698996655,"#AFDA45"],[0.876254180602007,"#B1DA44"],[0.879598662207358,"#B3DB44"],[0.882943143812709,"#B5DB43"],[0.88628762541806,"#B7DB42"],[0.889632107023411,"#BADC42"],[0.892976588628763,"#BCDC41"],[0.896321070234114,"#BEDC40"],[0.899665551839465,"#C0DD40"],[0.903010033444816,"#C2DD3F"],[0.906354515050167,"#C4DE3E"],[0.909698996655518,"#C6DE3E"],[0.91304347826087,"#C8DE3D"],[0.916387959866221,"#CBDF3C"],[0.919732441471572,"#CDDF3B"],[0.923076923076923,"#CFDF3B"],[0.926421404682274,"#D1E03A"],[0.929765886287625,"#D3E039"],[0.933110367892977,"#D5E038"],[0.936454849498328,"#D7E138"],[0.939799331103679,"#D9E137"],[0.94314381270903,"#DBE136"],[0.946488294314381,"#DDE235"],[0.949832775919732,"#DFE234"],[0.953177257525084,"#E1E233"],[0.956521739130435,"#E3E333"],[0.959866220735786,"#E5E332"],[0.963210702341137,"#E7E331"],[0.966555183946488,"#E9E430"],[0.969899665551839,"#EBE42F"],[0.973244147157191,"#EDE42E"],[0.976588628762542,"#EFE52D"],[0.979933110367893,"#F1E52C"],[0.983277591973244,"#F3E52B"],[0.986622073578595,"#F5E62A"],[0.989966555183946,"#F7E629"],[0.993311036789298,"#F9E627"],[0.996655518394649,"#FBE726"],[1,"#FDE725"]],"colorbar":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"thickness":23.04,"title":"Goals","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"tickmode":"array","ticktext":["10","20","30"],"tickvals":[0.1875,0.5,0.8125],"tickfont":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"ticklen":2,"len":0.5}},"xaxis":"x","yaxis":"y","frame":null}],"layout":{"margin":{"t":50.703196347032,"r":7.30593607305936,"b":35.4337899543379,"l":113.24200913242},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Top 10 Countries by No. of Goals from their Top 5 Scorers","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0.5,"xref":"paper"},"xaxis":{"domain":[0,0.303514598035146],"automargin":true,"type":"linear","autorange":false,"range":[-1.8,37.8],"tickmode":"array","ticktext":["0","10","20","30"],"tickvals":[0,10,20,30],"categoryorder":"array","categoryarray":["0","10","20","30"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":"","hoverformat":".2f"},"annotations":[{"text":"Number of Goals","x":0.5,"y":0,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"top","annotationType":"axis","yshift":-21.9178082191781},{"text":"Player","x":0,"y":0.5,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-90,"xanchor":"right","yanchor":"center","annotationType":"axis","xshift":-97.8995433789955},{"text":"Argentina","x":0.151757299017573,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"Belgium","x":0.848242700982427,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"Brazil","x":0.151757299017573,"y":0.759180849591809,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"England","x":0.848242700982427,"y":0.759180849591809,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"France","x":0.151757299017573,"y":0.559180849591808,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"Germany","x":0.848242700982427,"y":0.559180849591808,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"Italy","x":0.151757299017573,"y":0.359180849591808,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"Portugal","x":0.848242700982427,"y":0.359180849591808,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"Spain","x":0.151757299017573,"y":0.159180849591808,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"Uruguay","x":0.848242700982427,"y":0.159180849591808,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"}],"yaxis":{"domain":[0.840819150408192,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,5.6],"tickmode":"array","ticktext":["Lionel Messi","Sergio Agüero","Ángel Di María","Mauro Icardi","Gonzalo Higuaín"],"tickvals":[1,2,3,4,5],"categoryorder":"array","categoryarray":["Lionel Messi","Sergio Agüero","Ángel Di María","Mauro Icardi","Gonzalo Higuaín"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":"","hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":0.303514598035146,"y0":0.840819150408192,"y1":1},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":0.303514598035146,"y0":0,"y1":23.37899543379,"yanchor":1,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.696485401964854,"x1":1,"y0":0.840819150408192,"y1":1},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.696485401964854,"x1":1,"y0":0,"y1":23.37899543379,"yanchor":1,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":0.303514598035146,"y0":0.640819150408191,"y1":0.759180849591809},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":0.303514598035146,"y0":0,"y1":23.37899543379,"yanchor":0.759180849591809,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.696485401964854,"x1":1,"y0":0.640819150408191,"y1":0.759180849591809},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.696485401964854,"x1":1,"y0":0,"y1":23.37899543379,"yanchor":0.759180849591809,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":0.303514598035146,"y0":0.440819150408191,"y1":0.559180849591808},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":0.303514598035146,"y0":0,"y1":23.37899543379,"yanchor":0.559180849591808,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.696485401964854,"x1":1,"y0":0.440819150408191,"y1":0.559180849591808},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.696485401964854,"x1":1,"y0":0,"y1":23.37899543379,"yanchor":0.559180849591808,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":0.303514598035146,"y0":0.240819150408191,"y1":0.359180849591808},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":0.303514598035146,"y0":0,"y1":23.37899543379,"yanchor":0.359180849591808,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.696485401964854,"x1":1,"y0":0.240819150408191,"y1":0.359180849591808},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.696485401964854,"x1":1,"y0":0,"y1":23.37899543379,"yanchor":0.359180849591808,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":0.303514598035146,"y0":0,"y1":0.159180849591808},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":0.303514598035146,"y0":0,"y1":23.37899543379,"yanchor":0.159180849591808,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.696485401964854,"x1":1,"y0":0,"y1":0.159180849591808},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.696485401964854,"x1":1,"y0":0,"y1":23.37899543379,"yanchor":0.159180849591808,"ysizemode":"pixel"}],"xaxis2":{"type":"linear","autorange":false,"range":[-0.8,16.8],"tickmode":"array","ticktext":["0","5","10","15"],"tickvals":[0,5,10,15],"categoryorder":"array","categoryarray":["0","5","10","15"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.696485401964854,1],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y2","title":"","hoverformat":".2f"},"yaxis2":{"type":"linear","autorange":false,"range":[0.4,5.6],"tickmode":"array","ticktext":["Dries Mertens","Eden Hazard","Romelu Lukaku","Benito Raman","Dodi Lukebakio"],"tickvals":[1,2,3,4,5],"categoryorder":"array","categoryarray":["Dries Mertens","Eden Hazard","Romelu Lukaku","Benito Raman","Dodi Lukebakio"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.840819150408192,1],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x2","title":"","hoverformat":".2f"},"xaxis3":{"type":"linear","autorange":false,"range":[-0.75,15.75],"tickmode":"array","ticktext":["0","5","10","15"],"tickvals":[0,5,10,15],"categoryorder":"array","categoryarray":["0","5","10","15"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0,0.303514598035146],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y3","title":"","hoverformat":".2f"},"yaxis3":{"type":"linear","autorange":false,"range":[0.4,5.6],"tickmode":"array","ticktext":["Neymar","Charles","Richarlison","Roberto Firmino","Willian José"],"tickvals":[1,2,3,4,5],"categoryorder":"array","categoryarray":["Neymar","Charles","Richarlison","Roberto Firmino","Willian José"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.640819150408191,0.759180849591809],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x3","title":"","hoverformat":".2f"},"xaxis4":{"type":"linear","autorange":false,"range":[-0.9,18.9],"tickmode":"array","ticktext":["0","5","10","15"],"tickvals":[0,5,10,15],"categoryorder":"array","categoryarray":["0","5","10","15"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.696485401964854,1],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y4","title":"","hoverformat":".2f"},"yaxis4":{"type":"linear","autorange":false,"range":[0.4,5.6],"tickmode":"array","ticktext":["Jamie Vardy","Harry Kane","Raheem Sterling","Callum Wilson","Glenn Murray"],"tickvals":[1,2,3,4,5],"categoryorder":"array","categoryarray":["Jamie Vardy","Harry Kane","Raheem Sterling","Callum Wilson","Glenn Murray"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.640819150408191,0.759180849591809],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x4","title":"","hoverformat":".2f"},"xaxis5":{"type":"linear","autorange":false,"range":[-1.65,34.65],"tickmode":"array","ticktext":["0","10","20","30"],"tickvals":[0,10,20,30],"categoryorder":"array","categoryarray":["0","10","20","30"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0,0.303514598035146],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y5","title":"","hoverformat":".2f"},"yaxis5":{"type":"linear","autorange":false,"range":[0.4,5.6],"tickmode":"array","ticktext":["Kylian Mbappé","Karim Benzema","Wissam Ben Yedder","Florian Thauvin","Antoine Griezmann"],"tickvals":[1,2,3,4,5],"categoryorder":"array","categoryarray":["Kylian Mbappé","Karim Benzema","Wissam Ben Yedder","Florian Thauvin","Antoine Griezmann"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.440819150408191,0.559180849591808],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x5","title":"","hoverformat":".2f"},"xaxis6":{"type":"linear","autorange":false,"range":[-0.85,17.85],"tickmode":"array","ticktext":["0","5","10","15"],"tickvals":[1.11022302462516e-16,5,10,15],"categoryorder":"array","categoryarray":["0","5","10","15"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.696485401964854,1],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y6","title":"","hoverformat":".2f"},"yaxis6":{"type":"linear","autorange":false,"range":[0.4,5.6],"tickmode":"array","ticktext":["Kai Havertz","Marco Reus","Timo Werner","Kevin Volland","Leroy Sané"],"tickvals":[1,2,3,4,5],"categoryorder":"array","categoryarray":["Kai Havertz","Marco Reus","Timo Werner","Kevin Volland","Leroy Sané"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.440819150408191,0.559180849591808],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x6","title":"","hoverformat":".2f"},"xaxis7":{"type":"linear","autorange":false,"range":[-1.3,27.3],"tickmode":"array","ticktext":["0","10","20"],"tickvals":[0,10,20],"categoryorder":"array","categoryarray":["0","10","20"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0,0.303514598035146],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y7","title":"","hoverformat":".2f"},"yaxis7":{"type":"linear","autorange":false,"range":[0.4,5.6],"tickmode":"array","ticktext":["Fabio Quagliarella","Andrea Petagna","Francesco Caputo","Leonardo Pavoletti","Andrea Belotti"],"tickvals":[1,2,3,4,5],"categoryorder":"array","categoryarray":["Fabio Quagliarella","Andrea Petagna","Francesco Caputo","Leonardo Pavoletti","Andrea Belotti"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.240819150408191,0.359180849591808],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x7","title":"","hoverformat":".2f"},"xaxis8":{"type":"linear","autorange":false,"range":[-1.05,22.05],"tickmode":"array","ticktext":["0","5","10","15","20"],"tickvals":[0,5,10,15,20],"categoryorder":"array","categoryarray":["0","5","10","15","20"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.696485401964854,1],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y8","title":"","hoverformat":".2f"},"yaxis8":{"type":"linear","autorange":false,"range":[0.4,5.6],"tickmode":"array","ticktext":["Cristiano Ronaldo","André Silva","Diogo Jota","Rafael Leão","Bernardo Silva"],"tickvals":[1,2,3,4,5],"categoryorder":"array","categoryarray":["Cristiano Ronaldo","André Silva","Diogo Jota","Rafael Leão","Bernardo Silva"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.240819150408191,0.359180849591808],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x8","title":"","hoverformat":".2f"},"xaxis9":{"type":"linear","autorange":false,"range":[-1,21],"tickmode":"array","ticktext":["0","5","10","15","20"],"tickvals":[0,5,10,15,20],"categoryorder":"array","categoryarray":["0","5","10","15","20"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0,0.303514598035146],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y9","title":"","hoverformat":".2f"},"yaxis9":{"type":"linear","autorange":false,"range":[0.4,5.6],"tickmode":"array","ticktext":["Iago Aspas","Paco Alcácer","Borja Iglesias","Jaime Mata","Jorge Molina"],"tickvals":[1,2,3,4,5],"categoryorder":"array","categoryarray":["Iago Aspas","Paco Alcácer","Borja Iglesias","Jaime Mata","Jorge Molina"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0,0.159180849591808],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x9","title":"","hoverformat":".2f"},"xaxis10":{"type":"linear","autorange":false,"range":[-1.05,22.05],"tickmode":"array","ticktext":["0","5","10","15","20"],"tickvals":[0,5,10,15,20],"categoryorder":"array","categoryarray":["0","5","10","15","20"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.696485401964854,1],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y10","title":"","hoverformat":".2f"},"yaxis10":{"type":"linear","autorange":false,"range":[0.4,5.6],"tickmode":"array","ticktext":["Luis Suárez","Cristhian Stuani","Edinson Cavani","Maxi Gómez","Gastón Ramírez"],"tickvals":[1,2,3,4,5],"categoryorder":"array","categoryarray":["Luis Suárez","Cristhian Stuani","Edinson Cavani","Maxi Gómez","Gastón Ramírez"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0,0.159180849591808],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x10","title":"","hoverformat":".2f"},"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"c9a04f8d6ce6":{"x":{},"y":{},"fill":{},"text":{},"type":"bar"}},"cur_data":"c9a04f8d6ce6","visdat":{"c9a04f8d6ce6":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,6 +1,9 @@
 ---
 title: "The Best Performing Soccer Players in the Top 5 European Leagues: Goals, Assists, Cards, Most Valuable Players, and More"
+author: "**Felipe Pena and Maykon da Silva**"
 ---
+
+***
 
 <div style= "float : left; position : relative; top: 0px; width : 450px; height : 360px; padding-right: 24px; margin-bottom : 0px">
 ![](./photos/trophy.jpeg)

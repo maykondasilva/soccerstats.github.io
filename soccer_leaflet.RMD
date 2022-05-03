@@ -1,0 +1,161 @@
+---
+title: "Map of Soccer Players by their Nationality"
+output: flexdashboard::flex_dashboard
+---
+
+```{r setup, include = FALSE, echo = FALSE}
+library(tidyverse)
+library(lubridate)
+library(gt)
+library(paletteer)
+library(plotly)
+library(flexdashboard)
+library(janitor)
+library(forcats)
+library(purrr)
+library(webshot)
+library(graphics)
+library(RColorBrewer)
+library(DataExplorer)
+library(magrittr)
+library(sf)
+library(leaflet)
+library(ggridges)
+library(tigris)
+library(ggsflabel)
+library(ggthemes)
+library(htmltools)
+library(htmlwidgets)
+
+#Working directory for .RMD
+knitr::opts_knit$set(echo = TRUE,
+                     root.dir = rprojroot::find_rstudio_root_file())
+
+#Controlling figure output in markdown
+knitr::opts_chunk$set(
+  fig.height = 8, 
+  fig.width = 6,
+#  fig.asp = .5,
+  out.width = "90%",
+#  out.height = 
+ fig.align  = "center",
+  cache = FALSE,
+  eval  = TRUE,
+  echo  = TRUE,
+  warning = FALSE
+)
+
+#My Colours (from viridis)
+my_purple <- "#440154FF"
+my_yellow <- "#FDE725FF"
+
+#Set Theme for ggplot2
+theme_set(theme_bw() + theme(plot.title = element_text(hjust = 0.5), legend.position = "bottom"))
+
+#Set Scientific notation output and decimal places for knitr
+options(scipen = 999)
+options(digits = 4)
+options(dplyr.summarise.inform = FALSE)
+```
+
+
+```{r data_read, include = FALSE, echo = FALSE}
+## Read in the three data sets
+
+# Load soccer stats data
+soccer.df <- read_csv(file = './data/soccer.csv') %>%
+filter(!is.na(player))
+
+# Load country names data set (with abbreviations)
+ioc_country.df <- read_csv("./data/NOC_countries.csv") %>%
+  select(Country, NOC)
+
+# Load country coordinates (geometry) data set
+world_boundaries.df <- read_csv("./data/world_coordinates.csv") %>%
+  janitor::clean_names() %>%
+  select(geo_point_coord, english_name, continent)
+
+```
+
+```{r, echo = FALSE, include = FALSE}
+# Do data wrangling and create needed variables
+soccer.df <- soccer.df %>%
+  mutate(squad          = as.factor(squad),
+         nationality    = as.factor(nationality),
+         position       = as.factor(position),
+         value_millions = (value/1000000)) %>%
+  separate(nationality, into = c("nationality", "country_origin"), sep = " ")
+
+# Create variable ranking of players by value and goals
+soccer.df <- soccer.df %>%
+  arrange(desc(value)) %>%
+  mutate(ranking_player_value = 1:length(player)) %>%
+  arrange(desc(goals)) %>%
+  mutate(ranking_player_goals = 1:length(player))
+  
+# Joining soccer stats with country names and calling it soccer_world.df
+soccer_world.df <- left_join(
+  soccer.df, 
+  ioc_country.df, 
+  by = c("country_origin" = "NOC")
+) 
+
+# Separating geometry into latitude and longitude
+world_boundaries.df <- world_boundaries.df %>%
+  separate(geo_point_coord, into = c("lat", "long"), sep = ",") %>%
+  mutate(lat  = as.numeric(lat),
+         long = as.numeric(long))
+
+# Joining soccer_world.df with world boundaries data
+soccer_world.df <- inner_join(
+  soccer_world.df, 
+  world_boundaries.df, 
+  by = c("Country" = "english_name") 
+)
+
+# Number of players per country
+soccer_world.df <- soccer_world.df %>%
+  group_by(Country) %>%
+  mutate(no_players = n(),
+         no_goals = sum(goals))
+
+#Add a text label like normal
+soccer_world.df <- soccer_world.df %>%
+  mutate(
+    text_label = str_c(Country,
+                       "<br/># Players: ",
+                       no_players,
+                       "<br/># Goals per Country: ",
+                       no_goals
+    )
+  )
+```
+
+### Map of Soccer Players by their Nationality
+
+```{r, echo = FALSE, include = TRUE, message = FALSE, warning = FALSE}
+# Color palette for continents
+pal <- colorFactor(c("viridis"), domain = c("Europe", "Asia", "Africa", "Oceania", "Americas"))
+
+# Leaflet title
+leaflet_title <- c("Number of Soccer Players by Country")
+
+# Leaflet of soccer players by country/nationality
+leaflet(data = soccer_world.df) %>%
+  addProviderTiles('CartoDB.Positron') %>% 
+  addCircleMarkers(lng = ~long, 
+                   lat = ~lat,
+                   radius = ~(no_players/20),
+                   color = ~pal(continent),
+                   opacity = 0.4,
+                   label = ~map(text_label, HTML)
+  ) %>%
+  addLegend(
+    title    = "Continent",
+    pal      = pal,
+    values   = ~soccer_world.df$continent,
+    position = "bottomright"
+  ) %>%
+  addControl(leaflet_title, position = "bottomleft")
+```
+
