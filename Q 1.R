@@ -13,37 +13,78 @@ library(cfbplotR)
 library(sf)
 library(leaflet)
 library(plotly)
+library(readr)
 
 # Set plots aspect
 
 theme_set(theme_bw() + theme(plot.title = element_text(hjust = 0.5)))
 
-
-# ---- Data cleaning (is also in the other script------
+# ---- Data cleaning (I did modify how dataset was uploaded to R) -----
 
 # We need to upload all the data in the first part of the script
 
 # Load data
 soccer.df <- read_csv(file = './data/soccer.csv') %>%
   filter(!is.na(player))
-ioc_country.df <- read_csv("./data/NOC_countries.csv") %>%
-  select(Country, NOC)
+
+ioc_country.df <- read_csv(url("https://raw.githubusercontent.com/datasets/country-codes/master/data/country-codes.csv")) %>%
+  select(FIFA,official_name_en) %>%
+  rename(Country=official_name_en,NOC=FIFA)
+
+
+world_boundaries3.df <- read_csv("./data/world-coordinates-data.csv") %>%
+janitor::clean_names() 
+
+
 # Create variable for millions of dollars
 soccer.df <- soccer.df %>%
   mutate(value_millions = (value/1000000)) %>%
   separate(nationality, into = c("nationality", "country_origin"), sep = " ")
+
 # Ranking of players by value and number of goal
 soccer.df <- soccer.df %>%
   arrange(desc(value)) %>%
   mutate(ranking_player_value = 1:length(player)) %>%
   arrange(desc(goals)) %>%
   mutate(ranking_player_goals = 1:length(player))
+
+# Create variable for lat and long
+
+world_boundaries3.df <- world_boundaries3.df %>%
+  separate(geo_point_coord, into = c("lat", "long"), sep = ",") %>%
+  mutate(lat = as.numeric(lat),long = as.numeric(long))
+
+
 # Join country's names
+
 soccer_world.df <- left_join(
   soccer.df,
   ioc_country.df,
   by = c("country_origin" = "NOC") #zipcode in first, zip_code second
 )
+
+
+# Edit names for countries from United Kingdom, and other countries with special characters
+
+soccer_world.df <- soccer_world.df %>%
+  mutate(Country = ifelse(country_origin %in% "ENG"|country_origin %in% "WAL"|country_origin %in% "SCO"|country_origin %in% "NIR","United Kingdom",Country)) %>%
+  mutate(Country = ifelse(country_origin %in% "CUW","Curaçao",Country)) %>%
+  mutate(Country = ifelse(country_origin %in% "KVX","Kosovo",Country)) %>%
+  mutate(Country = ifelse(country_origin %in% "CIV","Ivory Coast",Country)) %>%
+  mutate(Country = ifelse(country_origin %in% "CUW","Curacao",Country)) %>%
+  mutate(Country = ifelse(nationality %in% "GPE","Curacao",Country)) %>%
+  mutate(Country = ifelse(country_origin %in% "REU","Reunion",Country))
+
+
+# Join country's shape files
+
+soccer_world3.df <- inner_join(
+  soccer_world.df, 
+  world_boundaries3.df, 
+  by = c("Country" = "english_name") 
+)
+
+
 # ---- Q1 -----
 # Table with most valuable players by position (Position were grouped by Foward, Midfielder, Defender and Goalkeeper)
 soccer_world.df %>%
@@ -95,13 +136,11 @@ soccer_world.df %>%
 
 # Plot most valuable players by team
 Plot_valuable_players <- soccer_world.df %>%
-  group_by(squad) %>%
+  group_by(league) %>%
   arrange(ranking_player_value) %>%
   slice(1:5) %>%
   mutate(average_value_top_5 = round((mean(value,na.rm = TRUE)),2)) %>%
   arrange(desc(average_value_top_5)) %>%
-  ungroup() %>%
-  slice(1:30) %>%
   mutate(
     text_label = str_c("Value, Nationality, and Squad and More",
                        "\nTeam: ", squad,
@@ -115,14 +154,15 @@ Plot_valuable_players <- soccer_world.df %>%
   labs(
     x     = "Value (millions USD)",
     y     = "Player",
-    title = "Most valuable players in top 6 teams"
-  ) +
+    title = "Most valuable players in top 5 European Leagues" ) +
   scale_fill_viridis_c() +
   theme(axis.text.x = element_text(angle   = 90,
                                    vjust = 0.5,
                                    hjust = 1,
                                    size  = 10)) +
-  facet_wrap( ~Team , scales = "free")
+  facet_wrap( ~league , scales = "free",ncol=2) +
+  theme(panel.spacing = unit(2, "lines"))
 
-# Problems with plotly
-# ggplotly(Plot_valuable_players, tooltip = "text")
+# Transform into a ggplotly object
+ggplotly(Plot_valuable_players, tooltip = "text")
+  
