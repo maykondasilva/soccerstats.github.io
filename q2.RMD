@@ -1,8 +1,8 @@
 ---
-title: "What are the soccer teams and leagues for which the top 20 scorers played?"
+title: "Question 2"
 output: 
   flexdashboard::flex_dashboard:
-   storyboard: true
+    vertical_layout: scroll
 ---
 
 ```{r setup, include = FALSE, echo = FALSE}
@@ -128,11 +128,7 @@ soccer_world3.df <- inner_join(
 )
 ```
 
-***
-
 ### **Question 2 - GT Table**
-
-***
 
 ```{r, echo = FALSE}
 ## Q2 - What are the soccer teams (squad) and leagues for which the top scorers played?
@@ -175,15 +171,9 @@ soccer.df %>%
   tab_source_note("*Data merged from transfermarkt.de and fbref.com for 2018/19 season by Rafael Stepien and available on Kaggle*")
 ```
 
-***
-
 Above we just showed the GT Table
 
-***
-
-### **Question 2 - GGPLOTLY** {data-commentary-width=400}
-
-***
+### **Question 2 - GGPLOTLY**
 
 ```{r, echo = FALSE}
 ## Q2
@@ -192,7 +182,7 @@ q2_ggplot <- soccer.df %>%
   select(player, squad, league, country_origin, goals, assists, value_millions, position2) %>%
   arrange(desc(goals)) %>%
   slice(1:20) %>%
-  mutate(player = fct_reorder(player, desc(goals))) %>%
+  mutate(player = fct_reorder(player, (goals))) %>%
   mutate(
     text_label = str_c("\nTeam: ", squad)) %>%
   rename("League" = league) %>%
@@ -212,3 +202,5 @@ q2_ggplot <- soccer.df %>%
 
 ggplotly(q2_ggplot, tooltip = "text")
 ```
+
+Some commentary about plot above

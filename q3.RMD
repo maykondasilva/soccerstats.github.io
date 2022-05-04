@@ -1,8 +1,8 @@
 ---
-title: "What are the top 10 nationalities with the highest number of goals scored by their top 5 scorers?"
+title: "Question 3"
 output: 
   flexdashboard::flex_dashboard:
-   storyboard: true
+    vertical_layout: scroll
 ---
 
 ```{r setup, include = FALSE, echo = FALSE}
@@ -35,7 +35,7 @@ knitr::opts_knit$set(echo = TRUE,
 
 #Controlling figure output in markdown
 knitr::opts_chunk$set(
-  fig.height = 8, 
+  fig.height = 20, 
   fig.width = 6,
 #  fig.asp = .5,
   out.width = "90%",
@@ -129,11 +129,7 @@ soccer_world3.df <- inner_join(
 )
 ```
 
-***
-
 ### **Question 3 - GT Table**
-
-***
 
 ```{r, echo = FALSE, include = TRUE, message = FALSE, warning = FALSE}
 ## Q3 - 
@@ -192,15 +188,7 @@ goals_10countries <- soccer_world.df %>%
 goals_10countries
 ```
 
-***
-
-Above we just showed the GT Table
-
-***
-
-### **Question 3 - GGPLOTLY** {data-commentary-width=400}
-
-***
+### **Question 3 - GGPLOTLY**
 
 ```{r, echo = FALSE, include = TRUE, message = FALSE, warning = FALSE}
 
@@ -213,7 +201,7 @@ goals_10countries_ggplot <- soccer_world.df %>%
   mutate(total_goals_country = sum(goals)) %>%
   ungroup() %>%
   rename("Goals" = goals) %>%
-  mutate(player = fct_reorder(player, Goals, .desc = TRUE)) %>%
+  mutate(player = fct_reorder(player, Goals)) %>%
   mutate(
     text_label = str_c("\nTeam: ", squad,
                        "\nValue (M): ", scales::dollar(value_millions),

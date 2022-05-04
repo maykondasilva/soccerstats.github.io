@@ -1,9 +1,8 @@
 ---
-title: "Who are the most valuable soccer players, what is their nationality, position, team (squad), and how many goals did they score in the 2018/2019 season?"
+title: "Question 1"
 output: 
   flexdashboard::flex_dashboard:
-    orientation: columns
-    vertical_layout: fill
+    vertical_layout: scroll
 ---
 
 ```{r setup, include = FALSE, echo = FALSE}
@@ -36,7 +35,7 @@ knitr::opts_knit$set(echo = TRUE,
 
 #Controlling figure output in markdown
 knitr::opts_chunk$set(
-#  fig.height =   
+  fig.height = 8,  
   fig.width = 6,
 #  fig.asp = .5,
   out.width = "90%",
@@ -97,14 +96,12 @@ soccer.df <- soccer.df %>%
   mutate(ranking_player_goals = 1:length(player))
 
 # Separating geometry into latitude and longitude
-
 world_boundaries3.df <- world_boundaries3.df %>%
   separate(geo_point_coord, into = c("lat", "long"), sep = ",") %>%
   mutate(lat = as.numeric(lat),long = as.numeric(long))
 
 
 # Join country's names
-
 soccer_world.df <- left_join(
   soccer.df,
   ioc_country.df,
@@ -134,7 +131,7 @@ soccer_world3.df <- inner_join(
 
 ```
 
-### **Question 1 - GT Table**
+### Question 1 - GT Table
 
 ```{r, echo=FALSE}
 # Plot most valuable players by team
@@ -187,12 +184,17 @@ soccer_world.df %>%
 
 ```
 
-### **Question 1 - GGPLOTLY** 
+Comments gt table
+
+### **Question 1 - GGPlotly** 
 
 ```{r, echo=FALSE}
 # Plot most valuable players by league
 
 Plot_valuable_players <- soccer_world.df %>%
+  mutate(Position = ifelse(grepl("Forward", position2),"Forward",position2)) %>%
+  mutate(Position = ifelse(grepl("Midfielder", Position),"Midfielder",Position)) %>%
+  mutate(Position = ifelse(grepl("Defender", Position),"Defender",Position)) %>%
   group_by(league) %>%
   arrange(ranking_player_value) %>%
   slice(1:5) %>%
@@ -205,23 +207,22 @@ Plot_valuable_players <- soccer_world.df %>%
                        "\nGoals: ", goals,
                        "\nAssists: ", assists,
                        "\nPosition: ", position2)) %>%
-  rename("Player" = player,"Team" = squad,"Value" = value_millions,"Goals"=goals) %>%
+  rename("Player" = player,"Team" = squad,"Value" = value_millions,"Goals" = goals) %>%
   ggplot() +
-  geom_col(aes(x = Value, y = fct_reorder(Player,value), fill=Goals, text = text_label)) +
+  geom_col(aes(x = Value, y = fct_reorder(Player,value), fill = Position, text = text_label)) +
   labs(
     x     = "Value (millions USD)",
     y     = "Player",
     title = "Most valuable players in top 5 European Leagues" ) +
-  scale_fill_viridis_c() +
-  theme(axis.text.x = element_text(angle   = 90,
+  scale_fill_viridis_d("Value") +
+  theme(axis.text.x = element_text(angle = 0,
                                    vjust = 0.5,
                                    hjust = 1,
-                                   size  = 10)) +
-  facet_wrap( ~league , scales = "free",ncol=3) +
-  theme(panel.spacing = unit(2, "lines"))
+                                   size  = 8)) +
+  facet_wrap(~league , scales = "free", ncol = 2)
 
 # Transform into a ggplotly object
 ggplotly(Plot_valuable_players, tooltip = "text")
 ```
 
-
+Commentary ggplotly
