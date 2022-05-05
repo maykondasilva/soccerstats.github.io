@@ -1,5 +1,5 @@
 ---
-title: "Question 3"
+title: "What are the top 10 nationalities with the highest number of goals scored by their top 5 scorers?"
 output: 
   flexdashboard::flex_dashboard:
     vertical_layout: scroll
@@ -35,8 +35,8 @@ knitr::opts_knit$set(echo = TRUE,
 
 #Controlling figure output in markdown
 knitr::opts_chunk$set(
-  fig.height = 12, 
-  fig.width = 6,
+  fig.height = 14, 
+  fig.width = 10,
 #  fig.asp = .5,
   out.width = "90%",
 #  out.height = 
@@ -52,7 +52,7 @@ my_purple <- "#440154FF"
 my_yellow <- "#FDE725FF"
 
 #Set Theme for ggplot2
-theme_set(theme_bw() + theme(plot.title = element_text(hjust = 0.5), legend.position = "bottom"))
+theme_set(theme_bw() + theme(plot.title = element_text(hjust = 0.5,face = "bold"), legend.position = "bottom"))
 
 #Set Scientific notation output and decimal places for knitr
 options(scipen = 999)
@@ -129,7 +129,8 @@ soccer_world3.df <- inner_join(
 )
 ```
 
-### **Question 3 - GT Table**
+**Figure 3** and **Table 3** show the Top 10 Countries by the number of Goals from their Top 5 Scorers in 2018/2019 season.
+
 
 ```{r, echo = FALSE, include = TRUE, message = FALSE, warning = FALSE}
 ## Q3 - 
@@ -183,12 +184,12 @@ goals_10countries <- soccer_world.df %>%
     colors = scales::col_numeric(
       palette = c("PuBu"),
       domain  = c(0, 40))) %>%
-  tab_header(title = md("**Top 10 Countries by their 5 Top Scorers**"))
+  tab_header(title = md("**Table 3. Top 5 Scorers in top 10 countries in 2018/2019 season**"))
 
 goals_10countries
 ```
 
-### **Question 3 - GGPLOTLY**
+***
 
 ```{r, echo = FALSE, include = TRUE, message = FALSE, warning = FALSE}
 
@@ -211,11 +212,11 @@ goals_10countries_ggplot <- soccer_world.df %>%
   geom_col(aes(x = player, y = Goals, fill = Goals, text = text_label)) +
   facet_wrap(~Country, scales = "free", ncol = 2) +
   scale_fill_viridis_c() +
-  labs(title = "Top 10 Countries by No. of Goals from their Top 5 Scorers",
+  labs(title = "Figure 3. Top 5 Scorers in top 10 countries in 2018/2019 season",
        x = "Player",
        y = "Number of Goals") +
   theme(legend.position = "right") +
-  coord_flip()
+  coord_flip() + theme(panel.spacing = unit(7, "lines"))
 
-ggplotly(goals_10countries_ggplot, tooltip = "text")
+ggplotly(goals_10countries_ggplot, tooltip = "text") %>% layout(width = 900,heights = 1000,margin = list(b = 90))
 ```

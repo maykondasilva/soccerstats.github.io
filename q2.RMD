@@ -1,5 +1,5 @@
 ---
-title: "Question 2"
+title: "What are the soccer teams (squad) and leagues for which the top scorers played?"
 output: 
   flexdashboard::flex_dashboard:
     vertical_layout: scroll
@@ -52,7 +52,7 @@ my_purple <- "#440154FF"
 my_yellow <- "#FDE725FF"
 
 #Set Theme for ggplot2
-theme_set(theme_bw() + theme(plot.title = element_text(hjust = 0.5), legend.position = "bottom"))
+theme_set(theme_bw() + theme(plot.title = element_text(hjust = 0.5,face = "bold"), legend.position = "bottom"))
 
 #Set Scientific notation output and decimal places for knitr
 options(scipen = 999)
@@ -128,7 +128,8 @@ soccer_world3.df <- inner_join(
 )
 ```
 
-### **Question 2 - GT Table**
+Since goals have a great impact on player's value, we decided that would be interesting to further investigate in which teams / leagues this players were playing in the 2018/2019 season. **Table 2** and **Figure 2**, identified where the top 20 scorers played in the last season (Premier League = 6, La Liga = 5 , Serie A = 3, Ligue 1 = 3, Bundesliga = 2)
+
 
 ```{r, echo = FALSE}
 ## Q2 - What are the soccer teams (squad) and leagues for which the top scorers played?
@@ -168,12 +169,11 @@ soccer.df %>%
     table_body.hlines.color   = "white",
     column_labels.border.bottom.style = "black"
   ) %>%
+  tab_header(title = md("**Table 2. Top 20 scorers in 2018/2019 season**")) %>%
   tab_source_note("*Data merged from transfermarkt.de and fbref.com for 2018/19 season by Rafael Stepien and available on Kaggle*")
 ```
 
-Above we just showed the GT Table
-
-### **Question 2 - GGPLOTLY**
+***
 
 ```{r, echo = FALSE}
 ## Q2
@@ -191,7 +191,7 @@ q2_ggplot <- soccer.df %>%
   labs(
     x     = "Player",
     y     = "Goals",
-    title = "Number of Goals by Player"
+    title = "Figure 2. Number of Goals by Player"
   ) +
   scale_fill_viridis_d("League") +
   theme(axis.text.x = element_text(angle   = 0,
@@ -203,4 +203,3 @@ q2_ggplot <- soccer.df %>%
 ggplotly(q2_ggplot, tooltip = "text")
 ```
 
-Some commentary about plot above

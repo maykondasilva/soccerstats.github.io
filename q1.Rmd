@@ -1,5 +1,5 @@
 ---
-title: "Question 1"
+title: "Who are the top 5 most valuable soccer players, what is their nationality, position, team (squad), and how many goals did they score in the 2018/2019 season?"
 output: 
   flexdashboard::flex_dashboard:
     vertical_layout: scroll
@@ -35,8 +35,8 @@ knitr::opts_knit$set(echo = TRUE,
 
 #Controlling figure output in markdown
 knitr::opts_chunk$set(
-  fig.height = 8,  
-  fig.width = 6,
+  fig.height = 12,  
+  fig.width = 8,
 #  fig.asp = .5,
   out.width = "90%",
 #  out.height = 
@@ -52,7 +52,7 @@ my_purple <- "#440154FF"
 my_yellow <- "#FDE725FF"
 
 #Set Theme for ggplot2
-theme_set(theme_bw() + theme(plot.title = element_text(hjust = 0.5), legend.position = "bottom"))
+theme_set(theme_bw() + theme(plot.title = element_text(hjust = 0.5,face = "bold"), legend.position = "bottom"))
 
 #Set Scientific notation output and decimal places for knitr
 options(scipen = 999)
@@ -80,6 +80,7 @@ janitor::clean_names()
 
 
 ```
+
 
 
 ```{r Data wrangling, echo = FALSE, include = FALSE}
@@ -131,7 +132,14 @@ soccer_world3.df <- inner_join(
 
 ```
 
-### Question 1 - GT Table
+ 
+</font>
+
+-**Table 1** shows the country of origin, goals, assists of the 5 most valuable players by their position in the 2018/2019 season. The value of forwards is numerically higher than the value of midfielders, goakeepers or defenders. As a matter of fact, our visualization suggests the presence of an association between the player's value and the number of goals.
+
+-**Figure 1** shows the 5 players with the highest value in the top 5 European leagues in an interactive visualization. A large proportion of these players were strikers and showed a high number of goals and assists during the analyzed season.
+
+
 
 ```{r, echo=FALSE}
 # Plot most valuable players by team
@@ -151,9 +159,6 @@ soccer_world.df %>%
     columns = where(is.numeric),
     decimals = 0 ,
     suffixing = TRUE) %>%
-  cols_align(
-    align = "center",
-    columns = everything()) %>%
   cols_align(
     align = "center",
     columns = everything()) %>%
@@ -179,14 +184,12 @@ soccer_world.df %>%
     formatter = fmt_number,
     decimals  = 0,
     suffixing = TRUE) %>%
-  tab_header(title = md("**Top 5 most valuable players by position**")) %>%
+  tab_header(title = md("**Table 1. Top 5 most valuable players by position in 2018/2019 season**")) %>%
   tab_source_note("*Data merged from transfermarkt.de and fbref.com by Rafael Stepien and available on Kaggle*")
 
 ```
 
-Comments gt table
-
-### **Question 1 - GGPlotly** 
+***
 
 ```{r, echo=FALSE}
 # Plot most valuable players by league
@@ -209,20 +212,19 @@ Plot_valuable_players <- soccer_world.df %>%
                        "\nPosition: ", position2)) %>%
   rename("Player" = player,"Team" = squad,"Value" = value_millions,"Goals" = goals) %>%
   ggplot() +
-  geom_col(aes(x = Value, y = fct_reorder(Player,value), fill = Position, text = text_label)) +
+  geom_col(aes(x = Value, y = fct_reorder(Player,value), fill = fct_reorder(Position,value,.desc=TRUE), text = text_label)) +
   labs(
     x     = "Value (millions USD)",
     y     = "Player",
-    title = "Most valuable players in top 5 European Leagues" ) +
-  scale_fill_viridis_d("Value") +
+    title = "Figure 1. Most valuable players in top 5 European Leagues in 2018/2019 season" ) +
+  scale_fill_viridis_d("Position") +
   theme(axis.text.x = element_text(angle = 0,
                                    vjust = 0.5,
                                    hjust = 1,
                                    size  = 8)) +
-  facet_wrap(~league , scales = "free", ncol = 2)
+  facet_wrap(~league , scales = "free", ncol = 2) + theme(panel.spacing = unit(7, "lines"))
 
 # Transform into a ggplotly object
-ggplotly(Plot_valuable_players, tooltip = "text")
+ggplotly(Plot_valuable_players, tooltip = "text") %>% layout(width = 900,heights = 1000,margin = list(b = 90))
 ```
 
-Commentary ggplotly
