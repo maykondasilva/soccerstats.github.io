@@ -1,0 +1,12 @@
+---
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(fig.width = 14, fig.height = 16)
+```
+
+```{r shiny-app, echo = FALSE, warning = FALSE, message = FALSE}
+knitr::include_app("https://maykondasilva.shinyapps.io/Soccer_Stats/", height = "1000px")
+```

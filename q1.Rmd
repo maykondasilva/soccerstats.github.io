@@ -222,7 +222,7 @@ Plot_valuable_players <- soccer_world.df %>%
   facet_wrap(~league , scales = "free", ncol = 2)
 
 # Transform into a ggplotly object
-ggplotly(Plot_valuable_players, tooltip = "text")
+ggplotly(Plot_valuable_players, tooltip = "text", width = 400, height = 600)
 ```
 
 Commentary ggplotly

@@ -18,6 +18,8 @@ navbar:
       menu:
           - text: "Map of Players - Leaflet"
             href: soccer_leaflet.html
+          - text: "Soccer Stats Shiny Dashboard"
+            href: soccer_shiny_dashboard_leaflet.html
     - icon: fa-envelope fa-lg
       href: mailto:<mjdasilv@umn.edu>
     - icon: fa-github fa-lg
