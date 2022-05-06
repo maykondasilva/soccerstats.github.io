@@ -8,11 +8,11 @@ title: "Data Management"
  
 <i class="fa fa-wrench"></i>[Countries names](https://raw.githubusercontent.com/datasets/country-codes/master/data/country-codes.csv) 
 
-- Countries names were acquired from github <i class="fa fa-github"></i>. This dataset included countries' names as well as their abbreviation, allowing us to merge it with the main dataset.
+- Countries names were acquired from github <i class="fa fa-github"></i>. This dataset included countries' names as well as their abbreviation, allowing us to merge it with the main dataset by their names abbreviation using the inner_join() function in R Studio.
  
 <i class="fa fa-globe"></i>[World coordinates](https://public.opendatasoft.com/explore/dataset/world-administrative-boundaries/export/) 
 
-- Map coordinates (latitude and longitud) for each country were downloaded from opendatasoft. Dataset was merged with the main dataset by the countries' names.
+- Map coordinates (latitude and longitud) for each country were downloaded from opendatasoft. This data set was merged with the main data set by the countries' names also with the use of inner_join() function in R.
 
 <div style= "float : left; position : relative; top: 0px; width : 450px; height : 360px; padding-right: 24px; margin-bottom : 0px">
 ![](./photos/soccer.jpg)
