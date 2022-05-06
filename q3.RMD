@@ -1,8 +1,6 @@
 ---
 title: "What are the top 10 nationalities with the highest number of goals scored by their top 5 scorers?"
-output: 
-  flexdashboard::flex_dashboard:
-    vertical_layout: scroll
+output: html_document
 ---
 
 ```{r setup, include = FALSE, echo = FALSE}

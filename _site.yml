@@ -20,10 +20,22 @@ navbar:
             href: soccer_leaflet.html
           - text: "Soccer Stats Shiny Dashboard"
             href: soccer_shiny_dashboard_leaflet.html
+    - text: "Data"
+      menu:
+          - text: "Data management"
+            href: data_management.html
     - icon: fa-envelope fa-lg
-      href: mailto:<mjdasilv@umn.edu>
+      menu:
+          - text: "Maykon da Silva"
+            href: mailto:<mjdasilv@umn.edu>
+          - text: "Felipe Pena Mosca"
+            href: mailto:<penam003@umn.edu>
     - icon: fa-github fa-lg
-      href: http://github.com/maykondasilva/
+      menu:
+          - text: "Maykon da Silva"
+            href: http://github.com/maykondasilva/
+          - text: "Felipe Pena Mosca"
+            href: http://github.com/fepenamosca/
 output:  
    html_document:
     theme: flatly

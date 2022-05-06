@@ -1,8 +1,6 @@
 ---
 title: "What are the soccer teams (squad) and leagues for which the top scorers played?"
-output: 
-  flexdashboard::flex_dashboard:
-    vertical_layout: scroll
+output: html_document
 ---
 
 ```{r setup, include = FALSE, echo = FALSE}

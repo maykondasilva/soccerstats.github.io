@@ -1,8 +1,6 @@
 ---
 title: "Who are the top 5 most valuable soccer players, what is their nationality, position, team (squad), and how many goals did they score in the 2018/2019 season?"
-output: 
-  flexdashboard::flex_dashboard:
-    vertical_layout: scroll
+output: html_document
 ---
 
 ```{r setup, include = FALSE, echo = FALSE}

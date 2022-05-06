@@ -4,15 +4,15 @@ title: "Data Management"
 
 <i class="fa fa-folder"></i>[Kaggle dataset](https://www.kaggle.com/datasets/kriegsmaschine/soccer-players-values-and-their-statistics?select=transfermarkt_fbref_201819.csv)
  
--  Data was downloaded from Kaggle. The utilized dataset included data from transfermarkt.de and fbref.com for 2018/19 season merged by Rafael Stepien.
+-  Data was downloaded from Kaggle. The utilized dataset included data from transfermarkt.de and fbref.com for 2018/19 season merged by Rafael Stepien. This data contains 2100 observations and 400 variables containing information about 2018/2019 season for soccer players from teams competing in the top 5 European Leagues (La Liga, Premier League, Serie A, Bundesliga and Ligue 1). 
  
 <i class="fa fa-wrench"></i>[Countries names](https://raw.githubusercontent.com/datasets/country-codes/master/data/country-codes.csv) 
 
-- Countries names were acquired from github <i class="fa fa-github"></i>. This dataset included countries' names as well as their abbreviation, allowing us to connect it with the main dataset.
+- Countries names were acquired from github <i class="fa fa-github"></i>. This dataset included countries' names as well as their abbreviation, allowing us to merge it with the main dataset.
  
 <i class="fa fa-globe"></i>[World coordinates](https://public.opendatasoft.com/explore/dataset/world-administrative-boundaries/export/) 
 
-- Map coordinates for each country were downloaded from opendatasoft. Dataset was merged with the main dataset by the countries' names.
+- Map coordinates (latitude and longitud) for each country were downloaded from opendatasoft. Dataset was merged with the main dataset by the countries' names.
 
 <div style= "float : left; position : relative; top: 0px; width : 450px; height : 360px; padding-right: 24px; margin-bottom : 0px">
 ![](./photos/soccer.jpg)

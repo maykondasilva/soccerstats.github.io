@@ -290,23 +290,42 @@ $(document).ready(function () {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">Data management</li>
     <li>
-      <a href="data_management.html"></a>
+      <a href="data_management.html">Data management</a>
     </li>
   </ul>
 </li>
-<li>
-  <a href="mailto:&lt;mjdasilv@umn.edu&gt;">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-envelope fa-lg"></span>
      
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="mailto:&lt;mjdasilv@umn.edu&gt;">Maykon da Silva</a>
+    </li>
+    <li>
+      <a href="mailto:&lt;penam003@umn.edu&gt;">Felipe Pena Mosca</a>
+    </li>
+  </ul>
 </li>
-<li>
-  <a href="http://github.com/maykondasilva/">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-github fa-lg"></span>
      
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="http://github.com/maykondasilva/">Maykon da Silva</a>
+    </li>
+    <li>
+      <a href="http://github.com/fepenamosca/">Felipe Pena Mosca</a>
+    </li>
+  </ul>
 </li>
       </ul>
     </div><!--/.nav-collapse -->
@@ -324,15 +343,15 @@ $(document).ready(function () {
 
 <p><i class="fa fa-folder"></i><a href="https://www.kaggle.com/datasets/kriegsmaschine/soccer-players-values-and-their-statistics?select=transfermarkt_fbref_201819.csv">Kaggle dataset</a></p>
 <ul>
-<li>Data was downloaded from Kaggle. The utilized dataset included data from transfermarkt.de and fbref.com for 2018/19 season merged by Rafael Stepien.</li>
+<li>Data was downloaded from Kaggle. The utilized dataset included data from transfermarkt.de and fbref.com for 2018/19 season merged by Rafael Stepien. This data contains 2100 observations and 400 variables containing information about 2018/2019 season for soccer players from teams competing in the top 5 European Leagues (La Liga, Premier League, Serie A, Bundesliga and Ligue 1).</li>
 </ul>
 <p><i class="fa fa-wrench"></i><a href="https://raw.githubusercontent.com/datasets/country-codes/master/data/country-codes.csv">Countries names</a></p>
 <ul>
-<li>Countries names were acquired from github <i class="fa fa-github"></i>. This dataset included countries’ names as well as their abbreviation, allowing us to connect it with the main dataset.</li>
+<li>Countries names were acquired from github <i class="fa fa-github"></i>. This dataset included countries’ names as well as their abbreviation, allowing us to merge it with the main dataset.</li>
 </ul>
 <p><i class="fa fa-globe"></i><a href="https://public.opendatasoft.com/explore/dataset/world-administrative-boundaries/export/">World coordinates</a></p>
 <ul>
-<li>Map coordinates for each country were downloaded from opendatasoft. Dataset was merged with the main dataset by the countries’ names.</li>
+<li>Map coordinates (latitude and longitud) for each country were downloaded from opendatasoft. Dataset was merged with the main dataset by the countries’ names.</li>
 </ul>
 <div style= "float : left; position : relative; top: 0px; width : 450px; height : 360px; padding-right: 24px; margin-bottom : 0px">
 <p><img src="photos/soccer.jpg" /></p>
