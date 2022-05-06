@@ -1,6 +1,6 @@
 ---
 title: "The Best Performing Soccer Players in the Top 5 European Leagues: Goals, Assists, Cards, Most Valuable Players, and More"
-author: "**Felipe Pena and Maykon da Silva**"
+author: "**Felipe Pena Mosca and Maykon da Silva**"
 ---
 
 ***
@@ -21,4 +21,17 @@ author: "**Felipe Pena and Maykon da Silva**"
 </font>
 
 >“In football (soccer), the result is an impostor. You can do things really, really well but not win. There’s something greater than the result, more lasting – a legacy.” – Xavi - Spain international player (2000 - 2014)
+
+***
+This project had the objective of investigating which ones are the most valuable soccer players and top scorers in the top 5 European leagues. Specifically, 
+
+-1 Who are the top 5 most valuable soccer players, what is their nationality, position, team (squad), and how many goals did they score in the 2018/2019 season?
+
+***
+- 2 What are the soccer teams (squad) and leagues for which the top scorers played?
+***
+- 3 What are the top 10 nationalities with the highest number of goals scored by their top 5 scorers?
+
+
+
 

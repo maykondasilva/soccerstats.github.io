@@ -14,6 +14,8 @@ navbar:
             href: q2.html
           - text: "Question 3"
             href: q3.html
+    - text: "Data"
+      menu: data_management.html
     - text: "Map of Soccer Players"
       menu:
           - text: "Map of Players - Leaflet"
@@ -21,9 +23,17 @@ navbar:
           - text: "Soccer Stats Shiny Dashboard"
             href: soccer_shiny_dashboard_leaflet.html
     - icon: fa-envelope fa-lg
-      href: mailto:<mjdasilv@umn.edu>
+      menu:
+          - text: penam003@umn.edu
+          - href: mailto:<penam003@umn.edu>
+          - text: mjdasilv@umn.edu
+          - href: mailto:<mjdasilv@umn.edu>
     - icon: fa-github fa-lg
-      href: http://github.com/maykondasilva/
+      menu:
+          - "Felipe Pena Mosca"
+          - href: http://github.com/fepenamosca/
+          - "Maykon Da Silva"
+          - href: http://github.com/maykondasilva/
 output:  
    html_document:
     theme: flatly
