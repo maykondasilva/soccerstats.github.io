@@ -66,12 +66,18 @@ We used data publicly available on Kaggle.com which was gathered and merged by R
 </font>
 
 <font size = "5">
+
+***
+
 **Analysis Plan and Main Results**
-
-
 
 </font>
 
+In order to answer our research questions, we utilized a diverse range  of analytical and visualization tools, which included tables (GT Tables, Q1 & Q2), Interactive visualizations (GGplot and plotly, Q1,Q2 & Q3), the use of maps (Leaflet, Q3) and the development of a shinny app (Q3). 
+
+Our first question focused on investigating which players had the highest value during the 2018/2019 season. Our results, showed an association between the value of players and the number of goals scored during the 2018/2019 season. In addition, a large proportion of the most valuable players were forwards (strikers). The second part of our analysis focused on analyzing the leagues, teams and nationality of the top scorers in the 2018/2019 season. We found that 6,5,3,3 and 2 players were playing in the Premier League, La Liga, Serie A, Ligue 1 and Bundesliga, respectively. Additionally, the top 10 countries with the highest number of goals by their top 5 scorers were from countries in Europe (n=6), South America (n=3) and Africa (n=1).
+
+***
 
 <font size = "4">
 *“In football (soccer), the result is an impostor. You can do things really, really well but not win. There’s something greater than the result, more lasting – a legacy.” – Xavi - Spain international player (2000 - 2014)*
